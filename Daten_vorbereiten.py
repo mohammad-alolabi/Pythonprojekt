@@ -32,6 +32,26 @@ for file_name in os.listdir(folder_path_NL):
         # Datei laden und die Daten zur Liste hinzufügen
         mat_data_list_NL.append(scipy.io.loadmat(mat_file_path))        
         
+        
+# # Zeitvektoren initialisieren
+# t_NL = []
+# t_FL = []
+
+# # Für die normale Lager-Daten
+# NL_data = [mat_data_NL['X097_DE_time'], mat_data_NL['X098_DE_time'], mat_data_NL['X099_DE_time'], mat_data_NL['X100_DE_time']]
+
+# for data in NL_data:
+#     # Zeitvektor erstellen und hinzufügen
+#     t_NL.append(np.arange(0, len(data)/10000, 0.0001))
+
+# # Für die Fehlerhafte Lager-Daten
+# FL_data = [mat_data_FL['X105_DE_time'], mat_data_FL['X122_DE_time'], mat_data_FL['X135_DE_time'], mat_data_FL['X148_DE_time'], mat_data_FL['X161_FE_time']]
+
+# for data in FL_data:
+#     # Zeitvektor erstellen und hinzufügen
+#     t_FL.append(np.arange(0, len(data)/10000, 0.0001))
+  
+
 # Hier kannst du mit den geladenen normale Lager-Daten in mat_data_list arbeiten
 NL_1 = mat_data_list_NL[1]['X097_DE_time'] 
 NL_2 = mat_data_list_NL[2]['X098_DE_time'] 
@@ -95,20 +115,20 @@ f_FL_2_fft = np.fft.fftfreq(len(FL_2))
 f_FL_3_fft = np.fft.fftfreq(len(FL_3))
 f_FL_4_fft = np.fft.fftfreq(len(FL_4))
 
-# Plot des Spektrums
-plt.figure(figsize=(10, 6))
-plt.plot(f_FL_3_fft, FL_3_fft, label='FL_3_fft')
-plt.plot(f_FL_1_fft, FL_1_fft, label='FL_1_fft')
-plt.plot(f_FL_4_fft, FL_4_fft, label='FL_4_fft')
-plt.plot(f_FL_2_fft, FL_2_fft, label='FL_2_fft')
-plt.plot(f_NL_1_fft, NL_1_fft, label='NL_1_fft')
-plt.xlabel('Frequenz (Hz)')
-plt.ylabel('Amplitude')
-plt.title('Normalized Amplitude Spectrum')
-plt.grid(True)
-plt.legend()  
-plt.grid(True)  
-plt.show(block=True)  
+# # Plot des Spektrums
+# plt.figure(figsize=(10, 6))
+# plt.plot(f_FL_3_fft, FL_3_fft, label='FL_3_fft')
+# plt.plot(f_FL_1_fft, FL_1_fft, label='FL_1_fft')
+# plt.plot(f_FL_4_fft, FL_4_fft, label='FL_4_fft')
+# plt.plot(f_FL_2_fft, FL_2_fft, label='FL_2_fft')
+# plt.plot(f_NL_1_fft, NL_1_fft, label='NL_1_fft')
+# plt.xlabel('Frequenz (Hz)')
+# plt.ylabel('Amplitude')
+# plt.title('Normalized Amplitude Spectrum')
+# plt.grid(True)
+# plt.legend()  
+# plt.grid(True)  
+# plt.show(block=True)  
 
 # Berechne die Kurtosis des Rohsignals
 sig_NL_kurtosis = [kurtosis(NL_1), kurtosis(NL_2), kurtosis(NL_3), kurtosis(NL_4)]
