@@ -4,7 +4,9 @@ import numpy as np
 import matplotlib.pyplot as plt
 import math
 from scipy.stats import kurtosis
-from scipy.stats import shapiro, anderson, levene
+import torch
+import torch.nn as nn
+import torch.optim as optim
 # from sklearn.preprocessing import MinMaxScaler
 
 
@@ -195,11 +197,14 @@ for i, data in enumerate(FL_data_DE):
 
 # Plot der Wölbungswerte über die Zeitintervalle
 plt.figure(figsize=(10, 6))
-plt.plot(kurtosis_NL_DE_["1"], '*' , label=f'NL_DE_{1}')
-#plt.plot(kurtosis_FL_DE_["1"], '*' , label=f'FL_DE_{1}')
-#plt.plot(kurtosis_FL_DE_["2"], '*' , label=f'FL_DE_{2}')
-plt.plot(kurtosis_FL_DE_["3"], '*' , label=f'FL_DE_{3}')
-#plt.plot(kurtosis_FL_DE_["4"], '*' , label=f'FL_DE_{4}')
+plt.plot(kurtosis_NL_DE_["1"][150:-1], '*' , label=f'NL_DE_{1}')
+# plt.plot(kurtosis_NL_DE_["2"][0:150], '*' , label=f'NL_DE_{2}')
+# plt.plot(kurtosis_NL_DE_["3"][0:150], '*' , label=f'NL_DE_{3}')
+# plt.plot(kurtosis_NL_DE_["4"][0:150], '*' , label=f'NL_DE_{4}')
+plt.plot(kurtosis_FL_DE_["1"][150:-1], '*' , label=f'FL_DE_{1}')
+plt.plot(kurtosis_FL_DE_["2"][150:-1], '*' , label=f'FL_DE_{2}')
+plt.plot(kurtosis_FL_DE_["3"][150:-1], '*' , label=f'FL_DE_{3}')
+plt.plot(kurtosis_FL_DE_["4"][150:-1], '*' , label=f'FL_DE_{4}')
 plt.xlabel('')
 plt.ylabel('Wölbung')
 plt.grid(True)
@@ -252,4 +257,108 @@ plt.show()
 # # Test auf Gleichheit der Kovarianzmatrizen
 # levene_test = levene(mean_features_class1, mean_features_class2)#, mean_features_class3, mean_features_class4, mean_features_class5)
 # print("Levene-Test für die Gleichheit der Kovarianzmatrizen:", levene_test)
+
+
+# Definiere das Feedforward-Netzwerk
+class FFNN(nn.Module):
+    def __init__(self, input_size, hidden_size, output_size):
+        super(FFNN, self).__init__()
+        self.fc1 = nn.Linear(input_size, hidden_size)
+        self.relu = nn.ReLU()
+        self.fc2 = nn.Linear(hidden_size, output_size)
+        self.sigmoid = nn.Sigmoid()
+    
+    def forward(self, x):
+        out = self.fc1(x)
+        out = self.relu(out)
+        out = self.fc2(out)
+        out = self.sigmoid(out)
+        return out
+
+# Training und Evaluation in einer Schleife
+for key in kurtosis_NL_DE_:
+    # Trainingsdaten für normale Lager
+    train_data_NL_DE = torch.tensor(kurtosis_NL_DE_[key][:200], dtype=torch.float32)
+    train_labels_NL_DE = torch.zeros(len(train_data_NL_DE), dtype=torch.float32).view(-1, 1)  # Kennzeichnen Sie Normaldaten als 0
+
+    # Testdaten für normale Lager
+    test_data_NL_DE = torch.tensor(kurtosis_NL_DE_[key][200:350], dtype=torch.float32)
+    test_labels_NL_DE = torch.zeros(len(test_data_NL_DE), dtype=torch.float32).view(-1, 1)  # Kennzeichnen Sie Normaldaten als 0
+
+    # Trainingsdaten für fehlerhafte Lager
+    train_data_FL_DE = torch.tensor(kurtosis_FL_DE_[key][:200], dtype=torch.float32)
+    train_labels_FL_DE = torch.ones(len(train_data_FL_DE), dtype=torch.float32).view(-1, 1)  # Kennzeichnen Sie Fehlerdaten als 1
+
+    # Testdaten für fehlerhafte Lager
+    test_data_FL_DE = torch.tensor(kurtosis_FL_DE_[key][200:350], dtype=torch.float32)
+    test_labels_FL_DE = torch.ones(len(test_data_FL_DE), dtype=torch.float32).view(-1, 1)  # Kennzeichnen Sie Fehlerdaten als 1
+
+  # Modell definieren
+    input_size = len(train_data_NL_DE[0])
+    hidden_size = input_size // 2
+    output_size = 1
+    model = FFNN(input_size, hidden_size, output_size)
+
+    # Verlustfunktion und Optimierer definieren
+    criterion = nn.BCELoss()
+    optimizer = optim.SGD(model.parameters(), lr=0.01)
+
+    # Trainingsdaten und Labels zusammenführen
+    train_data = torch.cat((train_data_NL_DE, train_data_FL_DE), dim=0)
+    train_labels = torch.cat((train_labels_NL_DE, train_labels_FL_DE), dim=0)
+
+    # Testdaten und Labels zusammenführen
+    test_data = torch.cat((test_data_NL_DE, test_data_FL_DE), dim=0)
+    test_labels = torch.cat((test_labels_NL_DE, test_labels_FL_DE), dim=0)
+
+    # Trainingsschleife
+    num_epochs = 1000
+    for epoch in range(num_epochs):
+        # Forward-Pass
+        outputs = model(train_data)
+        loss = criterion(outputs, train_labels)
+        
+        # Backward-Pass und Optimierung
+        optimizer.zero_grad()
+        loss.backward()
+        optimizer.step()
+        
+        if (epoch+1) % 100 == 0:
+            print(f'Epoch [{epoch+1}/{num_epochs}], Loss: {loss.item():.4f}')
+
+    # Evaluation
+    with torch.no_grad():
+        predicted = (model(test_data) > 0.5).float()
+        accuracy = (predicted == test_labels).float().mean()
+        print(f'Accuracy for {key}: {accuracy.item():.2f}')
+
+    # Konvertiere die Torch-Tensoren in numpy arrays
+    predicted = predicted.numpy().flatten()
+    test_labels = test_labels.numpy().flatten()
+
+    # Plot der Vorhersagen gegenüber den tatsächlichen Labels
+    plt.figure(figsize=(10, 8))
+    plt.scatter(range(len(test_labels)), test_labels, color='blue',  marker='o', label='Actual Labels')
+    plt.scatter(range(len(predicted)), predicted, color='red', marker='x', label='Predicted Labels')
+    plt.xlabel('Datenpunkt')
+    plt.ylabel('Label')
+    plt.title('Vorhersagen des Modells gegenüber den tatsächlichen Labels')
+    plt.legend()
+    plt.show()
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
