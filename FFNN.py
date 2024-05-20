@@ -123,10 +123,11 @@ def compute_features(data):
         
     return np.array(kurtosis_values), np.array(std_values).reshape(-1, 1)
 
-# Berechnung der Merkmale des normalen Lagers
+# Berechnung der Merkmale des normalen Lagers DE
 features_NL_DE_ = {f"{i+1}": compute_features(data) for i, data in enumerate(NL_data_DE)}
-
-# Berechnung der Merkmale des fehlerhaften Lagers
+# Berechnung der Merkmale des normalen Lagers FE
+features_NL_FE_ = {f"{i+1}": compute_features(data) for i, data in enumerate(NL_data_FE)}
+# Berechnung der Merkmale des fehlerhaften Lagers DE
 features_FL_DE_ = {f"{i+1}": compute_features(data) for i, data in enumerate(FL_data_DE)}
 # Berechnung der Merkmale des fehlerhaften Lagers FE
 features_FL_FE_ = {f"{i+1}": compute_features(data) for i, data in enumerate(FL_data_FE)}
@@ -141,6 +142,11 @@ for key in features_NL_DE_:
     for i in range(len(features_NL_DE_[key][0])):
         all_data.append([features_NL_DE_[key][0][i], features_NL_DE_[key][1][i]])
     all_labels.extend([0] * len(features_NL_DE_[key][0]))
+
+for key in features_NL_FE_:
+    for i in range(len(features_NL_FE_[key][0])):
+        all_data_FE.append([features_NL_FE_[key][0][i], features_NL_FE_[key][1][i]])
+    all_labels_FE.extend([0] * len(features_NL_FE_[key][0]))    
 
 for key in features_FL_DE_:
     for i in range(len(features_FL_DE_[key][0])):
@@ -161,9 +167,9 @@ all_labels_FE = np.array(all_labels_FE).reshape(-1, 1)
 # Tensoren erstellen
 data_tensor = torch.tensor(all_data[:,:,0], dtype=torch.float32)
 labels_tensor = torch.tensor(all_labels, dtype=torch.float32)
+
 data_tensor_FE = torch.tensor(all_data_FE[:,:,0], dtype=torch.float32)
 labels_tensor_FE = torch.tensor(all_labels_FE, dtype=torch.float32)
-
 
 # Dataset erstellen
 dataset = TensorDataset(data_tensor, labels_tensor)
@@ -176,11 +182,19 @@ test_size = len(dataset) - train_size - val_size
 
 train_dataset, val_dataset, test_dataset = random_split(dataset, [train_size, val_size, test_size])
 
+# Aufteilen in Trainings-, Validierungs- und Testdatensätze
+train_size_FE = int(0.6 * len(dataset_FE))
+val_size_FE = int(0.2 * len(dataset_FE))
+test_size_FE = len(dataset_FE) - train_size_FE - val_size_FE
+
+train_dataset, val_dataset, test_dataset_FE = random_split(dataset_FE, [train_size_FE, val_size_FE, test_size_FE])
+
 # DataLoader erstellen
 train_loader = DataLoader(train_dataset, batch_size =15, shuffle=True)
 val_loader   = DataLoader(val_dataset,   batch_size=15)
 test_loader  = DataLoader(test_dataset,  batch_size=70)
-# test_loader  = DataLoader(dataset_FE,  batch_size=70)
+
+test_loader_FE  = DataLoader(test_dataset_FE,  batch_size=70)
 
 # Definition des neuronalen Netzes
 class FFNN(pl.LightningModule):
@@ -264,20 +278,20 @@ with torch.no_grad():
     plt.show()
 
 
-# # Evaluation und grafische Darstellung der Ergebnisse
-# test_data_FE, test_labels_FE = next(iter(test_loader_FE))
+# Evaluation und grafische Darstellung der Ergebnisse
+test_data_FE, test_labels_FE = next(iter(test_loader_FE))
 
-# with torch.no_grad():
-#     predictions_FE = (model(test_data_FE) > 0.5).float()
-#     accuracy_FE = (predictions_FE == test_labels_FE).float().mean()
-#     print(f'Test_FE Accuracy: {accuracy_FE.item():.32}')
+with torch.no_grad():
+    predictions_FE = (model(test_data_FE) > 0.5).float()
+    accuracy_FE = (predictions_FE == test_labels_FE).float().mean()
+    print(f'Test_FE Accuracy: {accuracy_FE.item():.32}')
 
-#     # Plot der Vorhersagen gegenüber den tatsächlichen Labels
-#     plt.figure(figsize=(10, 6))
-#     plt.scatter(range(len(test_labels_FE)), test_labels_FE.numpy(), color='blue', label='Actual Labels')
-#     plt.scatter(range(len(predictions_FE)), predictions_FE.numpy(), color='red', marker='x', label='Predicted Labels')
-#     plt.xlabel('Datenpunkt')
-#     plt.ylabel('Label')
-#     plt.title('Vorhersagen des Modells gegenüber den tatsächlichen Labels')
-#     plt.legend()
-#     plt.show()
+    # Plot der Vorhersagen gegenüber den tatsächlichen Labels
+    plt.figure(figsize=(10, 6))
+    plt.scatter(range(len(test_labels_FE)), test_labels_FE.numpy(), color='blue', label='Actual Labels')
+    plt.scatter(range(len(predictions_FE)), predictions_FE.numpy(), color='red', marker='x', label='Predicted Labels')
+    plt.xlabel('Datenpunkt')
+    plt.ylabel('Label')
+    plt.title('Vorhersagen des Modells gegenüber den tatsächlichen Labels')
+    plt.legend()
+    plt.show()
