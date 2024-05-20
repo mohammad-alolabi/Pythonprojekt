@@ -183,6 +183,25 @@ kurtosis_FL_DE_ = {}
 for i, data in enumerate(FL_data_DE):
     kurtosis_FL_DE_[f"{i+1}"] = compute_kurtosis(data)
 
+# Plot der Wölbungswerte über die Zeitintervalle
+plt.figure(figsize=(10, 6))
+plt.plot(kurtosis_NL_DE_["1"], '*' , label=f'NL_DE_{1}')
+# plt.plot(kurtosis_NL_DE_["2"], '*' , label=f'NL_DE_{2}')
+# plt.plot(kurtosis_NL_DE_["3"], '*' , label=f'NL_DE_{3}')
+# plt.plot(kurtosis_NL_DE_["4"], '*' , label=f'NL_DE_{4}')
+plt.plot(kurtosis_FL_DE_["1"], '^' , label=f'FL_DE_{1}')
+# plt.plot(kurtosis_FL_DE_["2"], '*' , label=f'FL_DE_{2}')
+# plt.plot(kurtosis_FL_DE_["3"], '*' , label=f'FL_DE_{3}')
+# plt.plot(kurtosis_FL_DE_["4"], '*' , label=f'FL_DE_{4}')
+plt.xlabel('')
+plt.ylabel('Wölbung')
+plt.grid(True)
+plt.legend()
+plt.show()
+
+
+
+
 # # Normalisierung der Merkmale
 # scaler = MinMaxScaler()
 # for key in kurtosis_NL_DE_:
@@ -193,23 +212,6 @@ for i, data in enumerate(FL_data_DE):
 # # Beispiel für den Zugriff auf normierte Wölbungswerte
 # print(kurtosis_NL_DE_["1"])  # Normierte Wölbungswerte für das erste normale Lager
 # print(kurtosis_FL_DE_["1"])  # Normierte Wölbungswerte für das erste fehlerhafte Lager
-
-
-# Plot der Wölbungswerte über die Zeitintervalle
-plt.figure(figsize=(10, 6))
-plt.plot(kurtosis_NL_DE_["1"][150:-1], '*' , label=f'NL_DE_{1}')
-# plt.plot(kurtosis_NL_DE_["2"][0:150], '*' , label=f'NL_DE_{2}')
-# plt.plot(kurtosis_NL_DE_["3"][0:150], '*' , label=f'NL_DE_{3}')
-# plt.plot(kurtosis_NL_DE_["4"][0:150], '*' , label=f'NL_DE_{4}')
-plt.plot(kurtosis_FL_DE_["1"][150:-1], '*' , label=f'FL_DE_{1}')
-plt.plot(kurtosis_FL_DE_["2"][150:-1], '*' , label=f'FL_DE_{2}')
-plt.plot(kurtosis_FL_DE_["3"][150:-1], '*' , label=f'FL_DE_{3}')
-plt.plot(kurtosis_FL_DE_["4"][150:-1], '*' , label=f'FL_DE_{4}')
-plt.xlabel('')
-plt.ylabel('Wölbung')
-plt.grid(True)
-plt.legend()
-plt.show()
 
 
 # # Normaeren der Merkmale
@@ -265,6 +267,7 @@ class FFNN(nn.Module):
         super(FFNN, self).__init__()
         self.fc1 = nn.Linear(input_size, hidden_size)
         self.relu = nn.ReLU()
+        # self.relu = nn.Tanh()
         self.fc2 = nn.Linear(hidden_size, output_size)
         self.sigmoid = nn.Sigmoid()
     
@@ -275,14 +278,34 @@ class FFNN(nn.Module):
         out = self.sigmoid(out)
         return out
 
+# class FFNN(nn.Module):
+#     def __init__(self, input_size, hidden_size1, hidden_size2, output_size):
+#         super(FFNN, self).__init__()
+#         self.fc1 = nn.Linear(input_size, hidden_size1)
+#         self.relu1 = nn.ReLU()
+#         self.fc2 = nn.Linear(hidden_size1, hidden_size2)
+#         self.relu2 = nn.ReLU()
+#         self.fc3 = nn.Linear(hidden_size2, output_size)
+#         self.sigmoid = nn.Sigmoid()
+    
+#     def forward(self, x):
+#         out = self.fc1(x)
+#         out = self.relu1(out)
+#         out = self.fc2(out)
+#         out = self.relu2(out)
+#         out = self.fc3(out)
+#         out = self.sigmoid(out)
+#         return out
+
+
 # Training und Evaluation in einer Schleife
-for key in kurtosis_NL_DE_:
+for key in kurtosis_FL_DE_:
     # Trainingsdaten für normale Lager
-    train_data_NL_DE = torch.tensor(kurtosis_NL_DE_[key][:200], dtype=torch.float32)
+    train_data_NL_DE = torch.tensor(kurtosis_NL_DE_["1"][:200], dtype=torch.float32)
     train_labels_NL_DE = torch.zeros(len(train_data_NL_DE), dtype=torch.float32).view(-1, 1)  # Kennzeichnen Sie Normaldaten als 0
 
     # Testdaten für normale Lager
-    test_data_NL_DE = torch.tensor(kurtosis_NL_DE_[key][200:350], dtype=torch.float32)
+    test_data_NL_DE = torch.tensor(kurtosis_NL_DE_["1"][:200], dtype=torch.float32)
     test_labels_NL_DE = torch.zeros(len(test_data_NL_DE), dtype=torch.float32).view(-1, 1)  # Kennzeichnen Sie Normaldaten als 0
 
     # Trainingsdaten für fehlerhafte Lager
@@ -290,18 +313,19 @@ for key in kurtosis_NL_DE_:
     train_labels_FL_DE = torch.ones(len(train_data_FL_DE), dtype=torch.float32).view(-1, 1)  # Kennzeichnen Sie Fehlerdaten als 1
 
     # Testdaten für fehlerhafte Lager
-    test_data_FL_DE = torch.tensor(kurtosis_FL_DE_[key][200:350], dtype=torch.float32)
+    test_data_FL_DE = torch.tensor(kurtosis_FL_DE_[key][:200], dtype=torch.float32)
     test_labels_FL_DE = torch.ones(len(test_data_FL_DE), dtype=torch.float32).view(-1, 1)  # Kennzeichnen Sie Fehlerdaten als 1
 
   # Modell definieren
     input_size = len(train_data_NL_DE[0])
-    hidden_size = input_size // 2
+    hidden_size1 = input_size // 2
+    hidden_size2 = input_size // 2
     output_size = 1
-    model = FFNN(input_size, hidden_size, output_size)
+    model = FFNN(input_size, hidden_size1, hidden_size2, output_size)
 
     # Verlustfunktion und Optimierer definieren
     criterion = nn.BCELoss()
-    optimizer = optim.SGD(model.parameters(), lr=0.01)
+    optimizer = optim.SGD(model.parameters(), lr=0.001)
 
     # Trainingsdaten und Labels zusammenführen
     train_data = torch.cat((train_data_NL_DE, train_data_FL_DE), dim=0)
@@ -328,13 +352,22 @@ for key in kurtosis_NL_DE_:
 
     # Evaluation
     with torch.no_grad():
-        predicted = (model(test_data) > 0.5).float()
+        predicted = (model(test_data) < 0.5).float()
         accuracy = (predicted == test_labels).float().mean()
         print(f'Accuracy for {key}: {accuracy.item():.2f}')
 
     # Konvertiere die Torch-Tensoren in numpy arrays
     predicted = predicted.numpy().flatten()
     test_labels = test_labels.numpy().flatten()
+    
+    # Plot der Vorhersagen gegenüber den tatsächlichen Labels
+    plt.figure(figsize=(10, 8))
+    plt.scatter(range(len(test_labels)), test_labels, color='blue',  marker='o', label='Actual Labels')
+    plt.xlabel('Datenpunkt')
+    plt.ylabel('Label')
+    plt.title('Vorhersagen des Modells gegenüber den tatsächlichen Labels')
+    plt.legend()
+    plt.show()
 
     # Plot der Vorhersagen gegenüber den tatsächlichen Labels
     plt.figure(figsize=(10, 8))
