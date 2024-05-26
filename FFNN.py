@@ -5,10 +5,15 @@ import torch
 import torch.nn as nn
 import torch.optim as optim
 import pytorch_lightning as pl
+from pytorch_lightning.loggers import TensorBoardLogger
 from scipy.stats import kurtosis
 from torch.utils.data import DataLoader, TensorDataset, random_split
 import matplotlib.pyplot as plt
 
+"""
+
+
+"""
 
 # Pfad zum Ordner mit den .mat-Dateien
 folder_path_FL = r'C:\Users\ha368\OneDrive\Desktop\Python\Datenset\Fehlerhafte_Lager'
@@ -103,10 +108,11 @@ for data in FL_data_FE:
 # plt.show(block=True)      
 
 # Funktion zur Berechnung von Wölbung und Standardabweichung
+Umlaufzeit = 0.033
 def compute_features(data):
     kurtosis_values = []
     std_values = []
-    interval_length = 0.033
+    interval_length = Umlaufzeit
     num_intervals = int(len(data) / (interval_length * 10000))
     for i in range(num_intervals):
         start_index = int(i * interval_length * 10000)
@@ -132,42 +138,49 @@ features_FL_DE_ = {f"{i+1}": compute_features(data) for i, data in enumerate(FL_
 # Berechnung der Merkmale des fehlerhaften Lagers FE
 features_FL_FE_ = {f"{i+1}": compute_features(data) for i, data in enumerate(FL_data_FE)}
 
+# plot erstellen
+plt.figure(figsize=(10, 6))  
+plt.plot(features_NL_DE_["1"][0][0:400], "^", label='W') 
+plt.plot(features_NL_DE_["1"][1][0:400], "*", label='S') 
+# plt.plot(features_FL_DE_["2"][0], "*")  
+plt.plot(features_FL_DE_["1"][0], "^", label='W') 
+plt.plot(features_FL_DE_["2"][0], "^", label='W') 
+plt.plot(features_FL_DE_["1"][1], "*", label='S') 
+plt.plot(features_FL_DE_["2"][1], "*", label='S') 
+# plt.plot(features_FL_DE_["3"][1], "*") 
+# plt.plot(features_FL_DE_["4"][1], "*") 
+# plt.plot(features_FL_DE_["5"][1], "*") 
+plt.xlabel('Zeit')  
+plt.ylabel('Beschleunigung')  
+plt.legend()  
+plt.grid(True)  
+plt.show(block=True)   
+
 # Daten zusammenführen
-all_data = []
-all_labels = []
-all_data_FE = []
-all_labels_FE = []
+def prepare_data(features_NL, features_FL):
+    all_data = []
+    all_labels = []
+    for key in features_NL:
+        for i in range(len(features_NL[key][0])):
+            all_data.append([features_NL[key][0][i], features_NL[key][1][i]])
+        all_labels.extend([0] * len(features_NL[key][0]))
+    
+    for key in features_FL:
+        for i in range(len(features_FL[key][0])):
+            all_data.append([features_FL[key][0][i], features_FL[key][1][i]])
+        all_labels.extend([1] * len(features_FL[key][0]))
+    
+    all_data = np.array(all_data)
+    all_labels = np.array(all_labels).reshape(-1, 1)
+    
+    return all_data, all_labels
 
-for key in features_NL_DE_:
-    for i in range(len(features_NL_DE_[key][0])):
-        all_data.append([features_NL_DE_[key][0][i], features_NL_DE_[key][1][i]])
-    all_labels.extend([0] * len(features_NL_DE_[key][0]))
-
-for key in features_NL_FE_:
-    for i in range(len(features_NL_FE_[key][0])):
-        all_data_FE.append([features_NL_FE_[key][0][i], features_NL_FE_[key][1][i]])
-    all_labels_FE.extend([0] * len(features_NL_FE_[key][0]))    
-
-for key in features_FL_DE_:
-    for i in range(len(features_FL_DE_[key][0])):
-        all_data.append([features_FL_DE_[key][0][i], features_FL_DE_[key][1][i]])
-    all_labels.extend([1] * len(features_FL_DE_[key][0]))
-
-for key in features_FL_FE_:
-    for i in range(len(features_FL_FE_[key][0])):
-        all_data_FE.append([features_FL_FE_[key][0][i], features_FL_FE_[key][1][i]])
-    all_labels_FE.extend([1] * len(features_FL_FE_[key][0]))    
-
-all_data = np.array(all_data)  
-all_labels = np.array(all_labels).reshape(-1, 1)    
-
-all_data_FE = np.array(all_data_FE)  
-all_labels_FE = np.array(all_labels_FE).reshape(-1, 1)    
+all_data, all_labels = prepare_data(features_NL_DE_, features_FL_DE_)
+all_data_FE, all_labels_FE = prepare_data(features_NL_FE_, features_FL_FE_)
 
 # Tensoren erstellen
 data_tensor = torch.tensor(all_data[:,:,0], dtype=torch.float32)
 labels_tensor = torch.tensor(all_labels, dtype=torch.float32)
-
 data_tensor_FE = torch.tensor(all_data_FE[:,:,0], dtype=torch.float32)
 labels_tensor_FE = torch.tensor(all_labels_FE, dtype=torch.float32)
 
@@ -179,22 +192,21 @@ dataset_FE = TensorDataset(data_tensor_FE, labels_tensor_FE)
 train_size = int(0.6 * len(dataset))
 val_size = int(0.2 * len(dataset))
 test_size = len(dataset) - train_size - val_size
-
 train_dataset, val_dataset, test_dataset = random_split(dataset, [train_size, val_size, test_size])
 
-# Aufteilen in Trainings-, Validierungs- und Testdatensätze
 train_size_FE = int(0.6 * len(dataset_FE))
 val_size_FE = int(0.2 * len(dataset_FE))
 test_size_FE = len(dataset_FE) - train_size_FE - val_size_FE
-
-train_dataset, val_dataset, test_dataset_FE = random_split(dataset_FE, [train_size_FE, val_size_FE, test_size_FE])
+train_dataset_FE, val_dataset_FE, test_dataset_FE = random_split(dataset_FE, [train_size_FE, val_size_FE, test_size_FE])
 
 # DataLoader erstellen
-train_loader = DataLoader(train_dataset, batch_size =15, shuffle=True)
-val_loader   = DataLoader(val_dataset,   batch_size=15)
-test_loader  = DataLoader(test_dataset,  batch_size=70)
-
-test_loader_FE  = DataLoader(test_dataset_FE,  batch_size=70)
+batch_size_train = 55
+batch_size_val = 55
+batch_size_test = test_size 
+train_loader = DataLoader(train_dataset, batch_size_train, shuffle=True)
+val_loader = DataLoader(val_dataset, batch_size_val)
+test_loader = DataLoader(test_dataset, batch_size_test)
+test_loader_FE = DataLoader(test_dataset_FE, batch_size_test)
 
 # Definition des neuronalen Netzes
 class FFNN(pl.LightningModule):
@@ -244,54 +256,43 @@ class FFNN(pl.LightningModule):
     def configure_optimizers(self):
         return optim.SGD(self.parameters(), lr=0.01)
 
+
 # Hyperparameter definieren
-input_size = 2  # Da wir jetzt zwei Merkmale haben (Wölbung und Standardabweichung)
+input_size = all_data.shape[1]  # Da wir jetzt zwei Merkmale haben (Wölbung und Standardabweichung)
 hidden_sizes = [50, 25]  # Beliebige Anzahl von versteckten Schichten
 output_size = 1
+
+# TensorBoard Logger einrichten
+logger = TensorBoardLogger("tb_logs", name="FFNN")
 
 # Modell instanziieren
 model = FFNN(input_size, hidden_sizes, output_size)
 
 # Training des Modells
-trainer = pl.Trainer(max_epochs=50)
+trainer = pl.Trainer(max_epochs=50, logger=logger)
 trainer.fit(model, train_loader, val_loader)
 
-# Testen des Modells
-trainer.test(model, test_loader)
+# Funktion zum Testen des Modells
+def test_model(model, test_loader, title):
+    test_data, test_labels = next(iter(test_loader))
+    with torch.no_grad():
+        predictions = (model(test_data) > 0.5).float()
+        accuracy = (predictions == test_labels).float().mean()
+        print(f'{title} Accuracy: {accuracy.item():.4f}')
+        
+        # Plot der Vorhersagen gegenüber den tatsächlichen Labels
+        plt.figure(figsize=(10, 6))
+        plt.scatter(range(len(test_labels)), test_labels.numpy(), color='blue', label='Actual Labels')
+        plt.scatter(range(len(predictions)), predictions.numpy(), color='red', marker='x', label='Predicted Labels')
+        plt.xlabel('Datenpunkt')
+        plt.ylabel('Label')
+        plt.title(f'Vorhersagen des Modells gegenüber den tatsächlichen Labels ({title})')
+        plt.legend()
+        plt.show()
 
-# Evaluation und grafische Darstellung der Ergebnisse
-test_data, test_labels = next(iter(test_loader))
-
-with torch.no_grad():
-    predictions = (model(test_data) > 0.5).float()
-    accuracy = (predictions == test_labels).float().mean()
-    print(f'Test Accuracy: {accuracy.item():.32}')
-
-    # Plot der Vorhersagen gegenüber den tatsächlichen Labels
-    plt.figure(figsize=(10, 6))
-    plt.scatter(range(len(test_labels)), test_labels.numpy(), color='blue', label='Actual Labels')
-    plt.scatter(range(len(predictions)), predictions.numpy(), color='red', marker='x', label='Predicted Labels')
-    plt.xlabel('Datenpunkt')
-    plt.ylabel('Label')
-    plt.title('Vorhersagen des Modells gegenüber den tatsächlichen Labels')
-    plt.legend()
-    plt.show()
+# Testen des Modells mit verschiedenen Testdaten
+test_model(model, test_loader, "Test")
+test_model(model, test_loader_FE, "Test_FE")
 
 
-# Evaluation und grafische Darstellung der Ergebnisse
-test_data_FE, test_labels_FE = next(iter(test_loader_FE))
 
-with torch.no_grad():
-    predictions_FE = (model(test_data_FE) > 0.5).float()
-    accuracy_FE = (predictions_FE == test_labels_FE).float().mean()
-    print(f'Test_FE Accuracy: {accuracy_FE.item():.32}')
-
-    # Plot der Vorhersagen gegenüber den tatsächlichen Labels
-    plt.figure(figsize=(10, 6))
-    plt.scatter(range(len(test_labels_FE)), test_labels_FE.numpy(), color='blue', label='Actual Labels')
-    plt.scatter(range(len(predictions_FE)), predictions_FE.numpy(), color='red', marker='x', label='Predicted Labels')
-    plt.xlabel('Datenpunkt')
-    plt.ylabel('Label')
-    plt.title('Vorhersagen des Modells gegenüber den tatsächlichen Labels')
-    plt.legend()
-    plt.show()
