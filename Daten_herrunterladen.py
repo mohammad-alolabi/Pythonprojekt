@@ -2,6 +2,7 @@ import os
 import requests
 from bs4 import BeautifulSoup
 from urllib.parse import urljoin
+import scipy.io
 
 # Basis-URL der Webseite
 base_url_FL = "https://engineering.case.edu/bearingdatacenter/12k-drive-end-bearing-fault-data"
@@ -11,13 +12,13 @@ base_url_NL = "https://engineering.case.edu/bearingdatacenter/normal-baseline-da
 main_folder_FL = "Fehlerhafte_Lager"
 if not os.path.exists(main_folder_FL):
     os.makedirs(main_folder_FL)
-    
+
 main_folder_NL = "Normale_Lager"
 if not os.path.exists(main_folder_NL):
-    os.makedirs(main_folder_NL)    
+    os.makedirs(main_folder_NL)
 
 # Spezifische Ordnernamen in der gewünschten Reihenfolge
-folders_FL = [ "OR@6", "OR@3", "OR@12", "IR", "B"]
+folders_FL = ["OR@6", "OR@3", "OR@12", "IR", "B"]
 folders_NL = ["NL"]
 
 # Erstelle die spezifischen Ordner, wenn sie nicht existieren
@@ -26,7 +27,6 @@ for folder in folders_FL:
     if not os.path.exists(folder_path):
         os.makedirs(folder_path)
 
-# Erstelle die spezifischen Ordner, wenn sie nicht existieren
 for folder in folders_NL:
     folder_path = os.path.join(main_folder_NL, folder)
     if not os.path.exists(folder_path):
@@ -42,11 +42,31 @@ def download_file(url, folder, retries=3):
             with open(filename, 'wb') as file:
                 file.write(response.content)
             print(f"Datei heruntergeladen: {filename}")
+
+            # Spezifische Bearbeitung für '99.mat' in den normalen Lagerdaten
+            if '99.mat' in filename and 'Normale_Lager' in folder:
+                process_99_mat_file(filename)
+
             return
         except requests.exceptions.RequestException as e:
             print(f"Fehler beim Herunterladen der Datei: {url} (Versuch {attempt + 1} von {retries}) - {e}")
             if attempt == retries - 1:
-                print("Maximale Anzahl an Versuchen erreicht. Datei {filename} konnte nicht heruntergeladen werden.")
+                print(f"Maximale Anzahl an Versuchen erreicht. Datei {filename} konnte nicht heruntergeladen werden.")
+
+# Funktion zur Bearbeitung der '99.mat'-Datei
+def process_99_mat_file(filename):
+    data = scipy.io.loadmat(filename)
+
+    # Daten entfernen und ändern
+    if 'X098_DE_time' in data:
+        del data['X098_DE_time']
+    if 'X098_FE_time' in data:
+        del data['X098_FE_time']
+    data['X099RPM'] = 1750
+
+    # Daten speichern
+    scipy.io.savemat(filename, data)
+    print(f"'99.mat' wurde bearbeitet und gespeichert: {filename}")
 
 # Funktion zum Herunterladen der Daten für eine bestimmte URL und spezifische Ordner
 def download_data(base_url, main_folder, folders):
@@ -67,23 +87,23 @@ def download_data(base_url, main_folder, folders):
             if len(columns) > max_columns:
                 max_columns = len(columns)
                 
-                # Iteriere über die Spalten
-                for col in range(max_columns):
-                    # Bestimme den aktuellen Ordner basierend auf der Spaltennummer
-                    folder = folders[col % len(folders)]
-                    folder_path = os.path.join(main_folder, folder)
-                    
-                    # Gehe durch alle Zeilen der Tabelle und hole die Zelle der aktuellen Spalte
-                    for row in rows:
-                        cells = row.find_all(['td', 'th'])
-                        if len(cells) > col:
-                            cell = cells[col]
-                            # Finde alle Links in der Zelle
-                            for link in cell.find_all('a'):
-                                href = link.get('href')
-                                if href and href.endswith('.mat'):
-                                    url = urljoin(base_url, href)
-                                    download_file(url, folder_path)
+        # Iteriere über die Spalten
+        for col in range(max_columns):
+            # Bestimme den aktuellen Ordner basierend auf der Spaltennummer
+            folder = folders[col % len(folders)]
+            folder_path = os.path.join(main_folder, folder)
+            
+            # Gehe durch alle Zeilen der Tabelle und hole die Zelle der aktuellen Spalte
+            for row in rows:
+                cells = row.find_all(['td', 'th'])
+                if len(cells) > col:
+                    cell = cells[col]
+                    # Finde alle Links in der Zelle
+                    for link in cell.find_all('a'):
+                        href = link.get('href')
+                        if href and href.endswith('.mat'):
+                            url = urljoin(base_url, href)
+                            download_file(url, folder_path)
 
         print("Alle Dateien wurden heruntergeladen und entsprechend der Kategorien gespeichert.")
     else:
@@ -93,5 +113,3 @@ def download_data(base_url, main_folder, folders):
 download_data(base_url_NL, main_folder_NL, folders_NL)
 # Daten für fehlerhafte Lager herunterladen
 download_data(base_url_FL, main_folder_FL, folders_FL)
-
-
