@@ -14,7 +14,8 @@ from sklearn.metrics import confusion_matrix, precision_score, recall_score, f1_
 
 # Konfigurierbare Parameter
 Umlaufzeit = 0.033
-batch_size = 535
+train_size, val_size  = 0.6, 0.2
+batch_size = 230
 max_epochs = 50
 learning_rate = 0.01
 hidden_sizes = [50, 25]  # Beliebige Anzahl von versteckten Schichten
@@ -64,11 +65,14 @@ def plot_multiple_measurements(time_data_list, measurement_data_list, labels, yl
     plt.legend()
     plt.show()
 
-# Funktion zur Berechnung von Wölbung, Standardabweichung und Maximum
 def compute_features(data):
+    """
+    Funktion zur Berechnung von Wölbung, Standardabweichung und Maximum
+
+    """
     kurtosis_values = []
     std_values = []
-    # max_values = []
+    
     interval_length = Umlaufzeit
     num_intervals = int(len(data) / (interval_length * 10000))
     for i in range(num_intervals):
@@ -84,53 +88,48 @@ def compute_features(data):
         interval_std = np.std(interval_data)
         std_values.append(interval_std)
 
-        # # Berechnung des Maximums
-        # interval_max = np.max(interval_data)
-        # max_values.append(interval_max)
+        features = [
+            # np.array(kurtosis_values), 
+            np.array(std_values).reshape(-1, 1)
+                    ]
         
-    return np.array(std_values).reshape(-1, 1) #, np.array(kurtosis_values) #np.array(max_values).reshape(-1, 1)
+        
+    return features
 
 
-# Daten zusammenführen
 def prepare_data(features_NL, features_FL):
+    """
+    Daten zusammenführen
+
+    """
     all_data = []
     all_labels = []
-    if len(features_NL_DE["NL_1"][0]) == 1: # Für ein Merkmal
-        for key in features_NL:
-            for i in range(len(features_NL[key])):
-                all_data.append([features_NL[key][i]])
-            all_labels.extend([0] * len(features_NL[key]))
-    
-        for key in features_FL:
-            for i in range(len(features_FL[key])):
-                all_data.append([features_FL[key][i]])
-            all_labels.extend([1] * len(features_FL[key]))
-    
-        all_data = np.array(all_data)
-        all_labels = np.array(all_labels).reshape(-1, 1)   
-    else:                                   # Für mehrere Merkmale
-        for key in features_NL:
-            num_features = len(features_NL[key])
-            for i in range(len(features_NL[key][0])):
-                feature_vector = [features_NL[key][f][i] for f in range(num_features)]
-                all_data.append(feature_vector)
-            all_labels.extend([0] * len(features_NL[key][0]))
 
-        for key in features_FL:
-            num_features = len(features_FL[key])
-            for i in range(len(features_FL[key][0])):
-                feature_vector = [features_FL[key][f][i] for f in range(num_features)]
-                all_data.append(feature_vector)
-            all_labels.extend([1] * len(features_FL[key][0]))
-            
-        all_data = np.array(all_data)
-        all_labels = np.array(all_labels).reshape(-1, 1) 
-    
+    for key in features_NL:
+        num_features = len(features_NL[key])  # Anzahl der Merkmale bestimmen
+        for i in range(len(features_NL[key][0])):
+            feature_vector = [features_NL[key][f][i] for f in range(num_features)]
+            all_data.append(feature_vector)
+        all_labels.extend([0] * len(features_NL[key][0]))
+
+    for key in features_FL:
+        num_features = len(features_FL[key])  # Anzahl der Merkmale bestimmen
+        for i in range(len(features_FL[key][0])):
+            feature_vector = [features_FL[key][f][i] for f in range(num_features)]
+            all_data.append(feature_vector)
+        all_labels.extend([1] * len(features_FL[key][0]))
+
+    all_data = np.array(all_data)
+    all_labels = np.array(all_labels).reshape(-1, 1)
+
     return all_data, all_labels
 
 
-# Definition des neuronalen Netzes
 class FFNN(pl.LightningModule):
+    """
+    Definition des neuronalen Netzes
+
+    """
     def __init__(self, input_size, hidden_sizes, output_size, learning_rate):
         super(FFNN, self).__init__()
         self.layers = nn.ModuleList()
@@ -215,23 +214,23 @@ keys = ['DE_time', 'FE_time']
 extracted_NL_data = extract_data(mat_data_NL, keys)
 extracted_FL_data = {key: extract_data(data, keys) for key, data in mat_data_FL.items()}
 
-# Erstellen der Zeitvektoren
-t_NL_DE = create_time_vectors(extracted_NL_data['DE_time'])
-t_NL_FE = create_time_vectors(extracted_NL_data['FE_time'])
+# # Erstellen der Zeitvektoren
+# t_NL_DE = create_time_vectors(extracted_NL_data['DE_time'])
+# t_NL_FE = create_time_vectors(extracted_NL_data['FE_time'])
 
-t_FL_DE = {key: create_time_vectors(data['DE_time']) for key, data in extracted_FL_data.items()}
-t_FL_FE = {key: create_time_vectors(data['FE_time']) for key, data in extracted_FL_data.items()}
+# t_FL_DE = {key: create_time_vectors(data['DE_time']) for key, data in extracted_FL_data.items()}
+# t_FL_FE = {key: create_time_vectors(data['FE_time']) for key, data in extracted_FL_data.items()}
 
 
-# Beispiel: Plotten der ersten normalen Lager DE-Messung und der ersten fehlerhaften Lager DE-Messung für IR
-plot_multiple_measurements(
-[t_FL_DE['OR6'][0], t_FL_DE['OR3'][0], t_FL_DE['IR'][0], t_FL_DE['OR12'][0], t_FL_DE['B'][0], t_NL_DE[1]],
-[ extracted_FL_data['OR6']['DE_time'][0], extracted_FL_data['OR3']['DE_time'][0], 
- extracted_FL_data['IR']['DE_time'][0], extracted_FL_data['OR12']['DE_time'][0], 
- extracted_FL_data['B']['DE_time'][0], extracted_NL_data['DE_time'][1]],
-['Fehlerhafte Lager OR6 DE-Messung', 'Fehlerhafte Lager OR3 DE-Messung', 'Fehlerhafte Lager IR DE-Messung', 
- 'Fehlerhafte Lager OR12 DE-Messung','Fehlerhafte Lager B DE-Messung', 'Normale Lager DE-Messung']
-    )
+# # Beispiel: Plotten der ersten normalen Lager DE-Messung und der ersten fehlerhaften Lager DE-Messung für IR
+# plot_multiple_measurements(
+# [t_FL_DE['OR6'][0], t_FL_DE['OR3'][0], t_FL_DE['IR'][0], t_FL_DE['OR12'][0], t_FL_DE['B'][0], t_NL_DE[1]],
+# [ extracted_FL_data['OR6']['DE_time'][0], extracted_FL_data['OR3']['DE_time'][0], 
+#  extracted_FL_data['IR']['DE_time'][0], extracted_FL_data['OR12']['DE_time'][0], 
+#  extracted_FL_data['B']['DE_time'][0], extracted_NL_data['DE_time'][1]],
+# ['Fehlerhafte Lager OR6 DE-Messung', 'Fehlerhafte Lager OR3 DE-Messung', 'Fehlerhafte Lager IR DE-Messung', 
+#  'Fehlerhafte Lager OR12 DE-Messung','Fehlerhafte Lager B DE-Messung', 'Normale Lager DE-Messung']
+#     )
 
 
 # Berechnung der Merkmale des normalen Lagers DE
@@ -248,23 +247,23 @@ del mat_data_FL
 del mat_data_NL
 del extracted_NL_data
 del extracted_FL_data
-del t_NL_DE
-del t_NL_FE
-del t_FL_DE
-del t_FL_FE
+# del t_NL_DE
+# del t_NL_FE
+# del t_FL_DE
+# del t_FL_FE
 gc.collect()
 
 # # Beispielplot der Merkmale
 # plt.figure(figsize=(10, 6))
 # # Plotting normal Lager DE Merkmale
-# plt.plot(features_NL_DE["NL_2"][1][:400], "*", label='Normale Lager DE Std') 
+# plt.plot(features_NL_DE["NL_2"][1][:400], "*", label='Normale Lager DE W') 
 
 # # Plotting fehlerhafte Lager DE Merkmale 
-# plt.plot(features_FL_DE["IR_1"][1], "*", label='Fehlerhafte Lager IR DE Std') 
-# plt.plot(features_FL_DE["B_1"][1], "*", label='Fehlerhafte Lager B DE Std') 
-# plt.plot(features_FL_DE["OR3_1"][1], "*", label='Fehlerhafte Lager OR3 DE Std') 
-# plt.plot(features_FL_DE["OR6_1"][1], "*", label='Fehlerhafte Lager OR6 DE Std') 
-# plt.plot(features_FL_DE["OR12_1"][1], "*", label='Fehlerhafte Lager OR12 DE Std') 
+# plt.plot(features_FL_DE["IR_1"][1], "*", label='Fehlerhafte Lager IR DE W') 
+# plt.plot(features_FL_DE["B_1"][1], "*", label='Fehlerhafte Lager B DE W') 
+# plt.plot(features_FL_DE["OR3_1"][1], "*", label='Fehlerhafte Lager OR3 DE W') 
+# plt.plot(features_FL_DE["OR6_1"][1], "*", label='Fehlerhafte Lager OR6 DE W') 
+# plt.plot(features_FL_DE["OR12_1"][1], "*", label='Fehlerhafte Lager OR12 DE W') 
 
 # plt.xlabel('Datenpunkt')
 # plt.ylabel('Merkmale')
@@ -272,39 +271,26 @@ gc.collect()
 # plt.grid(True)
 # plt.show()
 
-# plt.figure(figsize=(10, 6))
-# # Plotting normal Lager DE Merkmale
-# plt.plot(features_NL_DE["NL_2"][0][:400], "^", label='Normale Lager DE Std') 
+plt.figure(figsize=(10, 6))
+# Plotting normal Lager DE Merkmale
+plt.plot(features_NL_DE["NL_1"][0][:400], "^", label='Normale Lager DE Std') 
+plt.plot(features_NL_DE["NL_2"][0][:400], "^", label='Normale Lager DE Std') 
+plt.plot(features_NL_DE["NL_3"][0][:400], "^", label='Normale Lager DE Std') 
+plt.plot(features_NL_DE["NL_4"][0][:400], "^", label='Normale Lager DE Std') 
 
-# # Plotting fehlerhafte Lager DE Merkmale 
-# plt.plot(features_FL_DE["IR_1"][0], "^", label='Fehlerhafte Lager IR DE Std') 
-# plt.plot(features_FL_DE["B_1"][0], "^", label='Fehlerhafte Lager B DE Std') 
-# plt.plot(features_FL_DE["OR3_1"][0], "^", label='Fehlerhafte Lager OR3 DE Std') 
-# plt.plot(features_FL_DE["OR6_1"][0], "^", label='Fehlerhafte Lager OR6 DE Std') 
-# plt.plot(features_FL_DE["OR12_1"][0], "^", label='Fehlerhafte Lager OR12 DE Std') 
+# Plotting fehlerhafte Lager DE Merkmale 
+plt.plot(features_FL_DE["IR_1"][0], "^", label='Fehlerhafte Lager IR DE Std') 
+plt.plot(features_FL_DE["B_1"][0], "^", label='Fehlerhafte Lager B DE Std') 
+plt.plot(features_FL_DE["OR3_1"][0], "^", label='Fehlerhafte Lager OR3 DE Std') 
+plt.plot(features_FL_DE["OR6_1"][0], "^", label='Fehlerhafte Lager OR6 DE Std') 
+plt.plot(features_FL_DE["OR12_1"][0], "^", label='Fehlerhafte Lager OR12 DE Std') 
 
-# plt.xlabel('Datenpunkt')
-# plt.ylabel('Merkmale')
-# plt.legend()
-# plt.grid(True)
-# plt.show()
+plt.xlabel('Datenpunkt')
+plt.ylabel('Merkmale')
+plt.legend()
+plt.grid(True)
+plt.show()
 
-# plt.figure(figsize=(10, 6))
-# # Plotting normal Lager DE Merkmale
-# plt.plot(features_NL_DE["NL_2"][2][:400], "^", label='Normale Lager DE Std') 
-
-# # Plotting fehlerhafte Lager DE Merkmale 
-# plt.plot(features_FL_DE["IR_1"][2], "^", label='Fehlerhafte Lager IR DE Std') 
-# plt.plot(features_FL_DE["B_1"][2], "^", label='Fehlerhafte Lager B DE Std') 
-# plt.plot(features_FL_DE["OR3_1"][2], "^", label='Fehlerhafte Lager OR3 DE Std') 
-# plt.plot(features_FL_DE["OR6_1"][2], "^", label='Fehlerhafte Lager OR6 DE Std') 
-# plt.plot(features_FL_DE["OR12_1"][2], "^", label='Fehlerhafte Lager OR12 DE Std') 
-
-# plt.xlabel('Datenpunkt')
-# plt.ylabel('Merkmale')
-# plt.legend()
-# plt.grid(True)
-# plt.show()
 
 # Daten zusammenführen und Tensoren erstellen
 all_data_DE, all_labels_DE = prepare_data(features_NL_DE, features_FL_DE)
@@ -321,18 +307,18 @@ dataset_DE = TensorDataset(data_tensor_DE, labels_tensor_DE)
 dataset_FE = TensorDataset(data_tensor_FE, labels_tensor_FE)
 
 # Aufteilen in Trainings-, Validierungs- und Testdatensätze
-train_size_DE = int(0.6 * len(dataset_DE))
-val_size_DE = int(0.2 * len(dataset_DE))
+train_size_DE = int(train_size * len(dataset_DE))
+val_size_DE = int(val_size * len(dataset_DE))
 test_size_DE = len(dataset_DE) - train_size_DE - val_size_DE
 train_dataset_DE, val_dataset_DE, test_dataset_DE = random_split(dataset_DE, [train_size_DE, val_size_DE, test_size_DE])
 
-train_size_FE = int(0.6 * len(dataset_FE))
-val_size_FE = int(0.2 * len(dataset_FE))
+train_size_FE = int(train_size * len(dataset_FE))
+val_size_FE = int(val_size * len(dataset_FE))
 test_size_FE = len(dataset_FE) - train_size_FE - val_size_FE
 train_dataset_FE, val_dataset_FE, test_dataset_FE = random_split(dataset_FE, [train_size_FE, val_size_FE, test_size_FE])
 
 # DataLoader erstellen
-batch_size_DE, batch_size_FE  = [test_size_DE, test_size_FE]
+batch_size_DE, batch_size_FE  = [test_size_DE, test_size_FE ]
 
 train_loader_DE = DataLoader(train_dataset_DE, batch_size, shuffle=True)
 val_loader_DE = DataLoader(val_dataset_DE, batch_size)
@@ -354,9 +340,17 @@ logger = TensorBoardLogger("tb_logs", name="FFNN")
 # Modell instanziieren
 model = FFNN(input_size, hidden_sizes, output_size, learning_rate)
 
-# Training des Modells
-trainer = pl.Trainer(max_epochs = max_epochs, logger=logger)
+# Training des Modells mit Early Stopping
+trainer = pl.Trainer(
+    max_epochs=max_epochs,
+    logger=logger,
+    callbacks=[pl.callbacks.EarlyStopping(monitor='val_loss', patience=7)]
+)
 trainer.fit(model, train_loader_DE, val_loader_DE)
+
+# # Training des Modells
+# trainer = pl.Trainer(max_epochs = max_epochs, logger=logger)
+# trainer.fit(model, train_loader_DE, val_loader_DE)
 
 # Funktion zum Testen des Modells
 def test_model(model, test_loader, title):
@@ -367,9 +361,10 @@ def test_model(model, test_loader, title):
         print(f'{title} Accuracy: {accuracy.item():.4f}')
         
         # Plot der Vorhersagen gegenüber den tatsächlichen Labels
+        Intervall_A , Intervall_E = [0, 100]
         plt.figure(figsize=(10, 6))
-        plt.scatter(range(len(test_labels)), test_labels.numpy(), color='blue', label='Actual Labels')
-        plt.scatter(range(len(predictions)), predictions.numpy(), color='red', marker='x', label='Predicted Labels')
+        plt.scatter(range(len(test_labels))[Intervall_A:Intervall_E], test_labels.numpy()[Intervall_A:Intervall_E], color='blue', label='Actual Labels')
+        plt.scatter(range(len(predictions))[Intervall_A:Intervall_E], predictions.numpy()[Intervall_A:Intervall_E], color='red', marker='x', label='Predicted Labels')
         plt.xlabel('Datenpunkt')
         plt.ylabel('Label')
         plt.title(f'Vorhersagen des Modells gegenüber den tatsächlichen Labels ({title})')
@@ -377,5 +372,6 @@ def test_model(model, test_loader, title):
         plt.show()
 
 # Testen des Modells mit verschiedenen Testdaten
+trainer.test(model, test_loader_DE)
 test_model(model, test_loader_DE, "Test")
 test_model(model, test_loader_FE, "Test_FE")
