@@ -1,4 +1,3 @@
-import os
 import gc
 import torch
 from torch.utils.data import DataLoader, TensorDataset, random_split
@@ -14,7 +13,7 @@ train_size, val_size = 0.6, 0.2
 batch_size = 230
 max_epochs = 50
 learning_rate = 0.01
-hidden_sizes = [50, 25]  
+hidden_sizes = [50, 25]
 
 # Pfade zu den Ordnern mit den .mat-Dateien
 folder_paths_FL = {
@@ -71,23 +70,23 @@ del extracted_FL_data
 del t_FL_DE, t_FL_FE, t_NL_DE, t_NL_FE, keys
 gc.collect()
 
-# Beispielplot der Merkmale
-plt.figure(figsize=(10, 6))
-# Plotting normal Lager DE Merkmale
-plt.plot(features_NL_DE["NL_2"][1][:400], "*", label='Normale Lager DE Std') 
+# # Beispielplot der Merkmale
+# plt.figure(figsize=(10, 6))
+# # Plotting normal Lager DE Merkmale
+# plt.plot(features_NL_DE["NL_2"][1][:400], "*", label='Normale Lager DE Std') 
 
-# Plotting fehlerhafte Lager DE Merkmale 
-plt.plot(features_FL_DE["IR_1"][1], "^", label='Fehlerhafte Lager IR DE Std') 
-plt.plot(features_FL_DE["B_1"][1], "^", label='Fehlerhafte Lager B DE Std') 
-plt.plot(features_FL_DE["OR3_1"][1], "^", label='Fehlerhafte Lager OR3 DE Std') 
-plt.plot(features_FL_DE["OR6_1"][1], "^", label='Fehlerhafte Lager OR6 DE Std') 
-plt.plot(features_FL_DE["OR12_1"][1], "^", label='Fehlerhafte Lager OR12 DE Std') 
+# # Plotting fehlerhafte Lager DE Merkmale 
+# plt.plot(features_FL_DE["IR_1"][1], "^", label='Fehlerhafte Lager IR DE Std') 
+# plt.plot(features_FL_DE["B_1"][1], "^", label='Fehlerhafte Lager B DE Std') 
+# plt.plot(features_FL_DE["OR3_1"][1], "^", label='Fehlerhafte Lager OR3 DE Std') 
+# plt.plot(features_FL_DE["OR6_1"][1], "^", label='Fehlerhafte Lager OR6 DE Std') 
+# plt.plot(features_FL_DE["OR12_1"][1], "^", label='Fehlerhafte Lager OR12 DE Std') 
 
-plt.xlabel('Datenpunkt')
-plt.ylabel('Merkmale')
-plt.legend()
-plt.grid(True)
-plt.show()
+# plt.xlabel('Datenpunkt')
+# plt.ylabel('Merkmale')
+# plt.legend()
+# plt.grid(True)
+# plt.show()
 
 plt.figure(figsize=(10, 6))
 # Plotting normal Lager DE Merkmale
@@ -106,7 +105,7 @@ plt.legend()
 plt.grid(True)
 plt.show()
 
-# Daten zusammenführen und Tensoren erstellen
+# Daten zusammenführen
 all_data_DE, all_labels_DE = prepare_data(features_NL_DE, features_FL_DE)
 all_data_FE, all_labels_FE = prepare_data(features_NL_FE, features_FL_FE)
 
@@ -130,7 +129,7 @@ train_size_FE = int(train_size * len(dataset_FE))
 val_size_FE = int(val_size * len(dataset_FE))
 test_size_FE = len(dataset_FE) - train_size_FE - val_size_FE
 train_dataset_FE, val_dataset_FE, test_dataset_FE = random_split(dataset_FE, [train_size_FE, val_size_FE, test_size_FE])
-
+#%%
 # DataLoader erstellen
 batch_size_DE = test_size_DE
 train_loader_DE = DataLoader(train_dataset_DE, batch_size, shuffle=True)
@@ -151,15 +150,11 @@ logger = TensorBoardLogger("tb_logs", name="model_1")
 # Modell instanziieren
 model = model_1(input_size, hidden_sizes, output_size, learning_rate)
 
-# Training des Modells mit Early Stopping
-trainer = pl.Trainer(
-    max_epochs=max_epochs,
-    logger=logger,
-    callbacks=[pl.callbacks.EarlyStopping(monitor='val_loss', patience=7)]
-)
+# Training des Modells
+trainer = pl.Trainer(max_epochs = max_epochs, logger=logger)
 trainer.fit(model, train_loader_DE, val_loader_DE)
 
 # Testen des Modells mit verschiedenen Testdaten
 trainer.test(model, test_loader_DE)
-test_model(model, test_loader_DE, "Test")
+test_model(model, test_loader_DE, "Test_DE")
 test_model(model, test_loader_FE, "Test_FE")

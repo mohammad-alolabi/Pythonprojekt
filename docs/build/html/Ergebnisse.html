@@ -1,0 +1,374 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="de" data-content_root="./">
+<head>
+  <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Ergebnisse, Zusammenfassung und Schlussfolgerung &mdash; Neuronale Netzwerke zur Klassifikation von Kugellager-Fehlern 1.0.0 Dokumentation</title>
+      <link rel="stylesheet" type="text/css" href="_static/pygments.css?v=80d5e7a1" />
+      <link rel="stylesheet" type="text/css" href="_static/css/theme.css?v=19f00094" />
+
+  
+  <!--[if lt IE 9]>
+    <script src="_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+        <script src="_static/jquery.js?v=5d32c60e"></script>
+        <script src="_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+        <script src="_static/documentation_options.js?v=f029ec32"></script>
+        <script src="_static/doctools.js?v=888ff710"></script>
+        <script src="_static/sphinx_highlight.js?v=dc90522c"></script>
+        <script src="_static/translations.js?v=70a09b52"></script>
+    <script src="_static/js/theme.js"></script>
+    <link rel="index" title="Stichwortverzeichnis" href="genindex.html" />
+    <link rel="search" title="Suche" href="search.html" />
+    <link rel="prev" title="Verwendung" href="Verwendung.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search"  style="background: black" >
+
+          
+          
+          <a href="index.html" class="icon icon-home">
+            Neuronale Netzwerke zur Klassifikation von Kugellager-Fehlern
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
+    <input type="text" name="q" placeholder="Dokumentation durchsuchen" aria-label="Dokumentation durchsuchen" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">Inhaltsverzeichnis:</span></p>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="Motivation.html">Motivation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="Einleitung.html">Einleitung</a></li>
+<li class="toctree-l1"><a class="reference internal" href="Dokumentation%20des%20Python-Codes.html">Dokumentation des Python-Codes</a></li>
+<li class="toctree-l1"><a class="reference internal" href="Verwendung.html">Verwendung</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">Ergebnisse, Zusammenfassung und Schlussfolgerung</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#ergebnisse"><strong>Ergebnisse</strong></a></li>
+<li class="toctree-l2"><a class="reference internal" href="#zusammenfassung"><strong>Zusammenfassung</strong></a></li>
+<li class="toctree-l2"><a class="reference internal" href="#schlussfolgerung"><strong>Schlussfolgerung</strong></a></li>
+</ul>
+</li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu"  style="background: black" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="index.html">Neuronale Netzwerke zur Klassifikation von Kugellager-Fehlern</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="index.html" class="icon icon-home" aria-label="Home"></a></li>
+      <li class="breadcrumb-item active">Ergebnisse, Zusammenfassung und Schlussfolgerung</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="_sources/Ergebnisse.rst.txt" rel="nofollow"> Quelltext anzeigen</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="ergebnisse-zusammenfassung-und-schlussfolgerung">
+<h1>Ergebnisse, Zusammenfassung und Schlussfolgerung<a class="headerlink" href="#ergebnisse-zusammenfassung-und-schlussfolgerung" title="Link to this heading"></a></h1>
+<p>In diesem Kapitel werden die Ergebnisse der bereitgestellten Skripte <cite>main_modell_1.py</cite> und
+<cite>main_modell_2.py</cite> präsentiert und die Auswirkungen verschiedener Hyperparameteranpassungen diskutiert.
+Nachdem die MAT-Daten von der Webseite in die entsprechenden Ordner heruntergeladen wurden, wird das
+erste Modell zur Klissifikastion der normalen und fehlerarten Lager mit den folgenden konfigurierbaren Parametern verwendet:</p>
+<blockquote>
+<div><div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="c1"># Konfigurierbare Parameter</span>
+<span class="n">Umlaufzeit</span> <span class="o">=</span> <span class="mf">0.033</span>
+<span class="n">train_size</span><span class="p">,</span> <span class="n">val_size</span> <span class="o">=</span> <span class="mf">0.6</span><span class="p">,</span> <span class="mf">0.2</span>
+<span class="n">batch_size</span> <span class="o">=</span> <span class="mi">230</span>
+<span class="n">max_epochs</span> <span class="o">=</span> <span class="mi">50</span>
+<span class="n">learning_rate</span> <span class="o">=</span> <span class="mf">0.01</span>
+<span class="n">hidden_sizes</span> <span class="o">=</span> <span class="p">[</span><span class="mi">50</span><span class="p">,</span> <span class="mi">25</span><span class="p">]</span>
+</pre></div>
+</div>
+</div></blockquote>
+<section id="ergebnisse">
+<h2><strong>Ergebnisse</strong><a class="headerlink" href="#ergebnisse" title="Link to this heading"></a></h2>
+<p>Nach der Ausführung des Skriptes werden die berechneten Merkmale Wölbung und Standardabweichung grafisch
+dargestellt. Aus den beiden untenstehenden Diagrammen kann eine klare Aussage getroffen werden: Die
+Wahl der Merkmale spielt eine entscheidende Rolle für die Robustheit und Genauigkeit des Modells.</p>
+<p>In der Abbildung (5) ist offensichtlich, dass es eine erhebliche Überlappung zwischen dem Merkmal der
+normalen Lager und den Merkmalen der in Ball fehlerhaften Lager gibt. Diese Überlappung ist besonders
+deutlich bei den Merkmalsklassen Wölbung und aber nicht bei der Standardabweichung in der Abbildung (6).</p>
+<figure class="align-center" id="id1">
+<img alt="" src="_images/Figure5.png" />
+<figcaption>
+<p><span class="caption-text">Abbildung (5):  Merkmal (Wölbung) über den Datenpunkten in verschiedenen Zuständen.</span><a class="headerlink" href="#id1" title="Link to this image"></a></p>
+</figcaption>
+</figure>
+<figure class="align-center" id="id2">
+<img alt="" src="_images/Figure6.png" />
+<figcaption>
+<p><span class="caption-text">Abbildung (6):  Merkmal (Standardabweichung) über den Datenpunkten in verschiedenen Zuständen.</span><a class="headerlink" href="#id2" title="Link to this image"></a></p>
+</figcaption>
+</figure>
+<p>Es ist wichtig, die Auswirkungen einzelner Merkmale auf das Modell zu verstehen. Zu diesem Zweck
+wurde das Modell einmal nur mit der Wölbung und einmal nur mit der Standardabweichung trainiert und
+getestet. Die Genauigkeiten dieser beiden Merkmale sind in Tabelle 1 aufgeführt.</p>
+<table class="docutils align-center" id="id3">
+<caption><span class="caption-text">Genauigkeit des Modells bei Verwendung einzelner Merkmale</span><a class="headerlink" href="#id3" title="Link to this table"></a></caption>
+<thead>
+<tr class="row-odd"><th class="head"><p>Wölbung</p></th>
+<th class="head"><p>Standardabweichung</p></th>
+<th class="head"><p>Genauigkeit</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>x</p></td>
+<td></td>
+<td><p>83.0 %</p></td>
+</tr>
+<tr class="row-odd"><td></td>
+<td><p>x</p></td>
+<td><p>98.4 %</p></td>
+</tr>
+</tbody>
+</table>
+<p>Die Ergebnisse zeigen, dass die Verwendung der Standardabweichung als Merkmal eine deutlich höhere
+Genauigkeit erzielt als die Wölbung. Dies deutet darauf hin, dass die Standardabweichung ein stabileres
+und aussagekräftigeres Merkmal zur Unterscheidung zwischen normalen und fehlerhaften Lagern darstellt.</p>
+<p>Die in Abbildung (7) gezeigte Trainings- und Validierungsverlustfunktion verdeutlicht, dass das Verhalten der
+Verlustfunktion für das Merkmal (Standardabweichung) stärker als das Merkmal (Wölbung) exponentiell
+abnimmt. Die Ergebnisse legen nahe, dass die Wahl der Merkmale einen erheblichen Einfluss auf die
+Modellleistung hat.</p>
+<figure class="align-center" id="id4">
+<img alt="" src="_images/Figure7.png" />
+<figcaption>
+<p><span class="caption-text">Abbildung (7): Trainings- und Validierungsverlustfunktion bei Verwendung einzelner Merkmale.</span><a class="headerlink" href="#id4" title="Link to this image"></a></p>
+</figcaption>
+</figure>
+<p>Wie bereits erwähnt, wurde in den Daten auch ein anderer Beschleunigungssensor verwendet, der in der
+12-Uhr-Position am Gehäuse der Ventilatorseite (FE) angebracht ist. Dies wirft die Frage auf, ob das
+Modell auch in der Lage ist, anhand der Informationen dieses Sensors zwischen normalen und
+fehlerhaften Zuständen zu unterscheiden. Hierzu wurden die Schritte zur Datenauswertung,
+Merkmalsberechnung und -zusammenführung, die für den Beschleunigungssensor (DE) erläutert wurden, auch
+für den Sensor (FE) durchgeführt, jedoch ohne das Modell mit diesen Daten zu trainieren. Das Modell
+erreichte eine Genauigkeit von 90 % bei der Verwendung der Merkmale (Standardabweichung) vom
+Beschleunigungssensor (DE). Dies zeigt, dass die Erkennung des Zustands der Kugellager unabhängig vom
+Ort des Beschleunigungssensors möglich ist.</p>
+<p>Eine weitere Untersuchung bestand darin, die konfigurierbaren Parameter zu ändern, insbesondere die
+Größe und Anzahl der verdeckten Schichten, z.B. <cite>hidden_sizes = [5]</cite> und <cite>hidden_sizes = [50]</cite>. Dabei
+zeigte sich, dass die Genauigkeit des Modells stabil bleibt, der Unterschied jedoch in der
+Trainingsverlustfunktion liegt. Die Trainingsverlustfunktion zeigt die Entwicklung des
+Trainingsverlusts im Verlauf der Trainingsiterationen und gibt Einblicke in das Verhalten des Modells.
+Das folgende Diagramm zeigt, wie sich verschiedene Netzwerkkonfigurationen auf die Lernkurve auswirken.
+Jede Kurve repräsentiert eine spezifische Kombination von versteckten Schichten und Neuronenanzahlen
+und zeigt, wie der Trainingsverlust im Verlauf der Iterationen abnimmt.</p>
+<figure class="align-center" id="id5">
+<img alt="Trainingsverlustfunktion bei Verwendung verschiedener verdeckter Schichten." src="_images/Figure8.png" />
+<figcaption>
+<p><span class="caption-text">Abbildung (8): Trainingsverlustfunktion bei Verwendung verschiedener verdeckter Schichten.</span><a class="headerlink" href="#id5" title="Link to this image"></a></p>
+</figcaption>
+</figure>
+<p>Durch den Vergleich der Kurven lässt sich feststellen, dass komplexere Modelle (mehr Neuronen und
+Schichten) in der Regel schneller konvergieren, was auf eine bessere Modellleistung hinweist. Diese
+Analyse zeigt die Bedeutung der Auswahl geeigneter Netzwerkkonfigurationen basierend auf den
+Anforderungen und der Komplexität der Daten, um optimale Ergebnisse zu erzielen. Anhand der Abbildung
+lässt sich erkennen, welchen Einfluss die maximale Anzahl an Iterationen (<cite>max_epochs</cite>) hat: Wenn das
+Modell mit <cite>hidden_sizes = [5]</cite> nur mit 10 Iterationen trainiert würde, hätte es nicht geschafft, nahe
+Null zu konvergieren. Somit ist es wichtig, eine ausreichende Anzahl an Iterationen zu wählen, um eine
+gute Konvergenz der Trainingsverlustfunktion sicherzustellen.</p>
+<p>Der Parameter <cite>batch_size</cite> gibt die Anzahl der Trainingsbeispiele an, die verwendet werden, um die
+Gewichte des Modells in einer einzigen Iteration zu aktualisieren. Kleinere Batchgrößen z.B
+<cite>batch_size = 100</cite> führen zu
+häufigeren Aktualisierungen der Gewichte, was zu einer besseren Generalisierung führen kann, jedoch
+mit noisier Lernkurven und längeren Trainingszeiten verbunden ist. Größere Batchgrößen z.B
+<cite>batch_size = 1000</cite> führen zu
+selteneren Aktualisierungen, was zu einem stabileren und schnelleren Training führt, aber die
+Generalisierungsfähigkeit des Modells reduzieren kann und mehr Speicher benötigt. Die Wahl der
+Batchgröße beeinflusst somit direkt die Trainingsstabilität und die Fähigkeit des Modells, zu
+generalisierten Lösungen zu gelangen.</p>
+<p>Jetzt können wir das Skript <cite>main_modell_2.py</cite>, in dem die entsprechenden Funktionen und das Modell,
+das die Fehlerarten klassifiziert, ausgeführt werden können, in Betracht ziehen. Zunächst werden die
+konfigurierbaren Parameter verwendet, die am Anfang definiert wurden. Zusätzlich werden Merkmale wie
+Wölbung, Standardabweichung, Maximum, Varianz und Root Mean Square (RMS) berechnet.</p>
+<p>Die Tabelle unten zeigt die Genauigkeit des Modells unter Verwendung verschiedener Kombinationen der
+konfigurierbaren Parameter. Diese Parameter umfassen die Anzahl der maximalen Epochen (<cite>max_epochs</cite>),
+die Architektur der verdeckten Schichten (<cite>hidden_sizes</cite>), die Batch-Größe (<cite>batch_size</cite>),
+die Lernrate (<cite>learning_rate</cite>), die Umlaufzeit (<cite>Umlaufzeit</cite>) und die erzielte Genauigkeit
+(<cite>Genauigkeit</cite>). Die Trainingsverlustkurve für jede Kombination wird ebenfalls grafisch in der Abbildung (9) dargestellt.</p>
+<table class="docutils align-center" id="id6">
+<caption><span class="caption-text">Genauigkeit des Modells bei Verwendung verschiedener Parameter</span><a class="headerlink" href="#id6" title="Link to this table"></a></caption>
+<thead>
+<tr class="row-odd"><th class="head"><p>Nr.</p></th>
+<th class="head"><p>max_epochs</p></th>
+<th class="head"><p>hidden_sizes</p></th>
+<th class="head"><p>batch_size</p></th>
+<th class="head"><p>learning_rate</p></th>
+<th class="head"><p>Umlaufzeit</p></th>
+<th class="head"><p>Genauigkeit</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>1</p></td>
+<td><p>50</p></td>
+<td><p>[50, 25]</p></td>
+<td><p>230</p></td>
+<td><p>0.01</p></td>
+<td><p>0.033</p></td>
+<td><p>68 %</p></td>
+</tr>
+<tr class="row-odd"><td><p>2</p></td>
+<td><p>50</p></td>
+<td><p>[100, 50, 25]</p></td>
+<td><p>50</p></td>
+<td><p>0.01</p></td>
+<td><p>0.033</p></td>
+<td><p>53 %</p></td>
+</tr>
+<tr class="row-even"><td><p>3</p></td>
+<td><p>50</p></td>
+<td><p>[200, 100, 50, 25]</p></td>
+<td><p>50</p></td>
+<td><p>0.0001</p></td>
+<td><p>0.033</p></td>
+<td><p>69 %</p></td>
+</tr>
+<tr class="row-odd"><td><p>4</p></td>
+<td><p>50</p></td>
+<td><p>[200, 100, 50, 25]</p></td>
+<td><p>50</p></td>
+<td><p>0.0001</p></td>
+<td><p>0.033 * 3</p></td>
+<td><p>80 %</p></td>
+</tr>
+<tr class="row-even"><td><p>5</p></td>
+<td><p>100</p></td>
+<td><p>[200, 200, 200, 200]</p></td>
+<td><p>40</p></td>
+<td><p>0.0001</p></td>
+<td><p>0.033 * 3</p></td>
+<td><p>85 %</p></td>
+</tr>
+</tbody>
+</table>
+<figure class="align-center" id="id7">
+<img alt="Trainingsverlustfunktion bei Verwendung verschiedener verdeckter Schichten." src="_images/Figure9.png" />
+<figcaption>
+<p><span class="caption-text">Abbildung (9): Trainingsverlustfunktion bei Verwendung verschiedener Parameter anhand der Tabelle.</span><a class="headerlink" href="#id7" title="Link to this image"></a></p>
+</figcaption>
+</figure>
+<p>Die Tabelle veranschaulicht, wie sich die Veränderung der Parameter auf die Modellgenauigkeit auswirkt.
+Hier sind einige wichtige Beobachtungen:</p>
+<p>1. <strong>Nr. 1:</strong> Mit dieser vorherige Anpasung erreichte das Modell eine Genauigkeit von 68 %. Diese
+Konfiguration zeigt, dass mit diesen Parametern eine schlechte Leistung erzielt wurde.</p>
+<p>2. <strong>Nr. 2:</strong> Durch Erhöhung der Anzahl der versteckten Schichten und Reduzierung der Batch-Größe
+sank die Genauigkeit auf 53 %. Aus der dazugehörigen Trainingsverlustkurve lässt sich erkennen, dass
+das Modell wahrscheinlich Oszillation in einem (lokalen oder globalen) Minimum hat. Dies deutet darauf
+hin, dass die Lernrate möglicherweise nicht optimal ist und angepasst werden sollte, um bessere Ergebnisse zu erzielen.</p>
+<p>3. <strong>Nr. 3:</strong> Eine sehr niedrige Lernrate ermöglichten es dem Modell, eine Genauigkeit von 69 % zu
+erreichen. Dies zeigt, dass eine niedrige Lernrate das Problem in der Nr.2 gelost wurde, Jedoch bleibt
+die Modellleistung immer noch niedrig wie in der Nr.1.</p>
+<p>4. <strong>Nr. 4:</strong> Bei gleicher Architektur wie Nr. 3, jedoch einer verlängerten Umlaufzeit, stieg die
+Genauigkeit auf 80 %. Aus der dazugehörigen Trainingsverlustkurve wird deutlich, dass die Anzahl der
+maximalen Epochen möglicherweise angepasst werden muss, um eine bessere Konvergenz zu erreichen.
+Die Verlängerung der Umlaufzeit bedeutet, dass das Modell mit längeren Intervallen arbeitet, was dazu
+beiträgt, die Datenmenge pro Merkmal zu reduzieren. Dies kann Überanpassung (Overfitting) vermeiden
+und die Robustheit des Modells erhöhen, da es weniger anfällig für zufällige Schwankungen in den Daten wird.</p>
+<p>5. <strong>Nr. 5:</strong> Mit <cite>max_epochs = 100</cite>, <cite>hidden_sizes = [200, 200, 200, 200]</cite>, <cite>batch_size = 40</cite>,
+und einer sehr niedrigen Lernrate (<cite>learning_rate = 0.0001</cite>) erreichte das Modell eine Genauigkeit
+von 85 %. Diese Konfiguration, die eine höhere Komplexität und mehr Epochen umfasst, liefert die besten
+Ergebnisse. Dies verdeutlicht, dass komplexere Modelle, kombiniert mit einer ausreichend langen
+Trainingszeit und einer niedrigen Lernrate, zu besseren Leistungen führen können.</p>
+<p>Die Ergebnisse zeigen, dass die Anzahl der Epochen (<cite>max_epochs</cite>) eine entscheidende Rolle für die
+Konvergenz des Modells spielt. Die Modelle mit <cite>hidden_sizes = [50, 25]</cite> und
+<cite>hidden_sizes = [100, 50, 25]</cite> haben mit 50 Epochen nicht optimal konvergiert, wie in den Kurven für
+Nr. 1 und Nr. 2 zu sehen ist. Die Komplexität des Modells sollte zur Anzahl der Epochen passen, um
+sicherzustellen, dass das Modell ausreichend trainiert wird. Die Wahl der Lernrate ist ebenfalls
+entscheidend, um zu vermeiden, dass das Modell in lokalen Minima stecken bleibt. Insgesamt
+unterstreichen diese Ergebnisse die Wichtigkeit der Hyperparameter-Tuning und der Analyse der
+Trainingskurven, um das Verhalten des Modells besser zu verstehen und die beste Leistung zu erzielen.
+Es ist jedoch bemerkenswert, dass das Modell nicht in der Lage ist, eine gute Genauigkeit zu erreichen,
+wenn es mit den Daten des anderen Sensors (FE) getestet wird. Die Genauigkeit liegt in diesem Fall nur
+bei etwa 20 %. In der Abbildung (10) werden die ersten 50 aus 881 getesteten Punkten als grafisch dargestellt,
+wobei die Labels sind wie folgt:</p>
+<blockquote>
+<div><div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="c1"># Labels für fehlerhafte Lager</span>
+<span class="n">labels_FL</span> <span class="o">=</span> <span class="p">{</span>
+   <span class="s1">&#39;IR&#39;</span><span class="p">:</span> <span class="mi">0</span><span class="p">,</span>
+   <span class="s1">&#39;B&#39;</span><span class="p">:</span> <span class="mi">1</span><span class="p">,</span>
+   <span class="s1">&#39;OR3&#39;</span><span class="p">:</span> <span class="mi">2</span><span class="p">,</span>
+   <span class="s1">&#39;OR6&#39;</span><span class="p">:</span> <span class="mi">3</span><span class="p">,</span>
+   <span class="s1">&#39;OR12&#39;</span><span class="p">:</span> <span class="mi">4</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+</div></blockquote>
+<figure class="align-center" id="id8">
+<img alt="Trainingsverlustfunktion bei Verwendung verschiedener verdeckter Schichten." src="_images/Figure10.png" />
+<figcaption>
+<p><span class="caption-text">Abbildung (10): Vorhersagen des Modells gegenüber den tatsächlichen Labels.</span><a class="headerlink" href="#id8" title="Link to this image"></a></p>
+</figcaption>
+</figure>
+</section>
+<section id="zusammenfassung">
+<h2><strong>Zusammenfassung</strong><a class="headerlink" href="#zusammenfassung" title="Link to this heading"></a></h2>
+<p>Die Experimente zeigen, dass die Wahl der Merkmale und Hyperparameter entscheidend für die
+Modellleistung ist. Die Standardabweichung erwies sich als stabileres Merkmal zur Unterscheidung
+zwischen normalen und fehlerhaften Lagern im Vergleich zur Wölbung. Das Training mit einer verlängerten
+Umlaufzeit führte zu einer höheren Genauigkeit, da es die Datenmenge pro Merkmal reduzierte und damit
+Überanpassung minimierte. Die Anpassung der Lernrate und Batch-Größe beeinflusst die Konvergenz und
+Generalisierung des Modells erheblich. Es wurde festgestellt, dass das Modell Schwierigkeiten hat, die
+Genauigkeit bei der Klsifizierung der Fehlerarten aufrechtzuerhalten, wenn es mit den Daten des anderen
+Sensors getestet wird. Insgesamt betont diese Arbeit die Bedeutung der Feinabstimmung der
+Netzwerkkonfigurationen und Hyperparameter für optimale Ergebnisse.</p>
+</section>
+<section id="schlussfolgerung">
+<h2><strong>Schlussfolgerung</strong><a class="headerlink" href="#schlussfolgerung" title="Link to this heading"></a></h2>
+<p>Diese Untersuchungen zeigen, dass eine sorgfältige Auswahl und Anpassung von Merkmalen und Hyperparametern
+wesentlich zur Verbesserung der Modellleistung beiträgt. Für zukünftige Forschungen könnte die Genauigkeit
+des Modells zur Klassifikation von Fehlerarten durch den Einsatz von Merkmalen aus dem Frequenzbereich
+erhöht werden. Alternativ könnten andere Verlustfunktionen getestet oder komplexere Netzarchitekturen,
+wie rekurrente neuronale Netze (RNNs) oder lang-kurzzeitgedächtnis-Netze (LSTMs), implementiert werden,
+um die Genauigkeit und Generalisierung weiter zu verbessern.</p>
+</section>
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="Verwendung.html" class="btn btn-neutral float-left" title="Verwendung" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Zurück</a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2024, Mohammad Alolabi.</p>
+  </div>
+
+  Erstellt mit <a href="https://www.sphinx-doc.org/">Sphinx</a> mit einem
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    bereitgestellt von <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

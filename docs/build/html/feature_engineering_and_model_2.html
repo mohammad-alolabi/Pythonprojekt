@@ -1,0 +1,335 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="de" data-content_root="./">
+<head>
+  <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Merkmalsextraktion und das Modell zur Klassifikation von Fehlerarten der Lager &mdash; Neuronale Netzwerke zur Klassifikation von Kugellager-Fehlern 1.0.0 Dokumentation</title>
+      <link rel="stylesheet" type="text/css" href="_static/pygments.css?v=80d5e7a1" />
+      <link rel="stylesheet" type="text/css" href="_static/css/theme.css?v=19f00094" />
+
+  
+  <!--[if lt IE 9]>
+    <script src="_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+        <script src="_static/jquery.js?v=5d32c60e"></script>
+        <script src="_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+        <script src="_static/documentation_options.js?v=f029ec32"></script>
+        <script src="_static/doctools.js?v=888ff710"></script>
+        <script src="_static/sphinx_highlight.js?v=dc90522c"></script>
+        <script src="_static/translations.js?v=70a09b52"></script>
+    <script src="_static/js/theme.js"></script>
+    <link rel="index" title="Stichwortverzeichnis" href="genindex.html" />
+    <link rel="search" title="Suche" href="search.html" />
+    <link rel="next" title="Verwendung" href="Verwendung.html" />
+    <link rel="prev" title="Merkmalsextraktion und das Modell zur Klassifikation von normalen und fehlerhaften Lagern" href="feature_engineering_and_model_1.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search"  style="background: black" >
+
+          
+          
+          <a href="index.html" class="icon icon-home">
+            Neuronale Netzwerke zur Klassifikation von Kugellager-Fehlern
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
+    <input type="text" name="q" placeholder="Dokumentation durchsuchen" aria-label="Dokumentation durchsuchen" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">Inhaltsverzeichnis:</span></p>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="Motivation.html">Motivation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="Einleitung.html">Einleitung</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="Dokumentation%20des%20Python-Codes.html">Dokumentation des Python-Codes</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="Daten%20herunterladen.html">Daten herunterladen</a></li>
+<li class="toctree-l2"><a class="reference internal" href="data_processing.html">Datenverarbeitung und visualisieren</a></li>
+<li class="toctree-l2"><a class="reference internal" href="feature_engineering_and_model_1.html">Merkmalsextraktion und das Modell zur Klassifikation von normalen und fehlerhaften Lagern</a></li>
+<li class="toctree-l2 current"><a class="current reference internal" href="#">Merkmalsextraktion und das Modell zur Klassifikation von Fehlerarten der Lager</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#feature_engineering_and_model_2.compute_features"><code class="docutils literal notranslate"><span class="pre">compute_features()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#feature_engineering_and_model_2.model_2"><code class="docutils literal notranslate"><span class="pre">model_2</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#feature_engineering_and_model_2.model_2.configure_optimizers"><code class="docutils literal notranslate"><span class="pre">model_2.configure_optimizers()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#feature_engineering_and_model_2.model_2.forward"><code class="docutils literal notranslate"><span class="pre">model_2.forward()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#feature_engineering_and_model_2.model_2.test_step"><code class="docutils literal notranslate"><span class="pre">model_2.test_step()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#feature_engineering_and_model_2.model_2.training_step"><code class="docutils literal notranslate"><span class="pre">model_2.training_step()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#feature_engineering_and_model_2.model_2.validation_step"><code class="docutils literal notranslate"><span class="pre">model_2.validation_step()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="#feature_engineering_and_model_2.prepare_data"><code class="docutils literal notranslate"><span class="pre">prepare_data()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#feature_engineering_and_model_2.test_model"><code class="docutils literal notranslate"><span class="pre">test_model()</span></code></a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="Verwendung.html">Verwendung</a></li>
+<li class="toctree-l1"><a class="reference internal" href="Ergebnisse.html">Ergebnisse, Zusammenfassung und Schlussfolgerung</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu"  style="background: black" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="index.html">Neuronale Netzwerke zur Klassifikation von Kugellager-Fehlern</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="index.html" class="icon icon-home" aria-label="Home"></a></li>
+          <li class="breadcrumb-item"><a href="Dokumentation%20des%20Python-Codes.html">Dokumentation des Python-Codes</a></li>
+      <li class="breadcrumb-item active">Merkmalsextraktion und das Modell zur Klassifikation von Fehlerarten der Lager</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="_sources/feature_engineering_and_model_2.rst.txt" rel="nofollow"> Quelltext anzeigen</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="merkmalsextraktion-und-das-modell-zur-klassifikation-von-fehlerarten-der-lager">
+<h1>Merkmalsextraktion und das Modell zur Klassifikation von Fehlerarten der Lager<a class="headerlink" href="#merkmalsextraktion-und-das-modell-zur-klassifikation-von-fehlerarten-der-lager" title="Link to this heading"></a></h1>
+<p>Hier werden die Methoden zur Merkmalsextraktion und das neuronale Netzwerkmodell beschrieben, das zur Klassifikation verschiedener Fehlerarten von Lagern eingesetzt wird.</p>
+<dl class="py function" id="module-feature_engineering_and_model_2">
+<dt class="sig sig-object py" id="feature_engineering_and_model_2.compute_features">
+<span class="sig-prename descclassname"><span class="pre">feature_engineering_and_model_2.</span></span><span class="sig-name descname"><span class="pre">compute_features</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">data</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">interval_length</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#feature_engineering_and_model_2.compute_features" title="Link to this definition"></a></dt>
+<dd><p>Berechnet verschiedene Merkmale der Daten in festgelegten Intervallen.</p>
+<p>Diese Funktion berechnet die Wölbung (Kurtosis), die Standardabweichung, das Maximum,
+die Varianz und den Root Mean Square (RMS) der Daten in jedem Intervall.
+sie teilt die Eingangsdaten in Intervalle auf, berechnet für jedes Intervall die Merkmale
+und gibt diese als Merkmalsvektoren zurück.
+Um ein zusätzliches Merkmal wie die Spitzenwert zu berechnen, kann die Funktion
+entsprechend wie die Wölbung oder andere Mekrmale erweitert werden. (Ein genaues Beispiel wird später in nächstem Kapitel „Verwendung“ erläutert)</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameter<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>data</strong> (<em>array</em>) – Eingabedaten.</p></li>
+<li><p><strong>interval_length</strong> (<em>float</em>) – Länge des Intervalls in Sekunden, über das die Merkmale berechnet werden.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Rückgabe<span class="colon">:</span></dt>
+<dd class="field-even"><p>Liste der berechneten Merkmale. Jedes Merkmal wird als NumPy-Array zurückgegeben.</p>
+</dd>
+<dt class="field-odd">Rückgabetyp<span class="colon">:</span></dt>
+<dd class="field-odd"><p>list</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="feature_engineering_and_model_2.model_2">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">feature_engineering_and_model_2.</span></span><span class="sig-name descname"><span class="pre">model_2</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">input_size</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">hidden_sizes</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">output_size</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">learning_rate</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#feature_engineering_and_model_2.model_2" title="Link to this definition"></a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">LightningModule</span></code></p>
+<p>Ein Feedforward-Neuronales Netzwerk zur Klassifikation von Lagerfehlern.</p>
+<p>Diese Klasse definiert die Struktur und das Training eines neuronalen Netzwerks zur Klassifikation
+von Merkmalen, um verschiedene Arten von Lagerfehlern zu erkennen. Sie verwendet PyTorch Lightning
+für das Training und die Evaluierung. Für Mehrklassenklassifikation wird eine Softmax-Funktion in der
+Ausgangsschicht verwendet.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameter<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>input_size</strong> (<em>int</em>) – Die Größe des Eingangsvektors. Typischerweise genau die Anzahl der Merkmale.</p></li>
+<li><p><strong>hidden_sizes</strong> (<em>list</em>) – Liste der Größen und Anzahl der versteckten Schichten.
+Beispiel: <code class="docutils literal notranslate"><span class="pre">hidden_sizes</span> <span class="pre">=</span> <span class="pre">[10,</span> <span class="pre">5]</span></code> bedeutet, dass es zwei versteckte Schichten gibt;
+die erste Schicht hat 10 Neuronen und die zweite hat 5 Neuronen.</p></li>
+<li><p><strong>output_size</strong> (<em>int</em>) – Die Größe des Ausgangsvektors, typischerweise die Anzahl der Klassen für Mehrklassenklassifikation.</p></li>
+<li><p><strong>learning_rate</strong> (<em>float</em>) – Die Lernrate für den Optimierer (kann angepasst werden).</p></li>
+</ul>
+</dd>
+</dl>
+<dl class="py method">
+<dt class="sig sig-object py" id="feature_engineering_and_model_2.model_2.configure_optimizers">
+<span class="sig-name descname"><span class="pre">configure_optimizers</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#feature_engineering_and_model_2.model_2.configure_optimizers" title="Link to this definition"></a></dt>
+<dd><p>Konfiguriert die Optimizer für das Training.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Rückgabe<span class="colon">:</span></dt>
+<dd class="field-odd"><p>Der konfigurierte Optimierer.</p>
+</dd>
+<dt class="field-even">Rückgabetyp<span class="colon">:</span></dt>
+<dd class="field-even"><p>torch.optim.Optimizer</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="feature_engineering_and_model_2.model_2.forward">
+<span class="sig-name descname"><span class="pre">forward</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">x</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#feature_engineering_and_model_2.model_2.forward" title="Link to this definition"></a></dt>
+<dd><p>Führt einen Vorwärtsdurchlauf durch das Netzwerk aus.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameter<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>x</strong> (<em>torch.Tensor</em>) – Eingabedaten.</p>
+</dd>
+<dt class="field-even">Rückgabe<span class="colon">:</span></dt>
+<dd class="field-even"><p>Ausgabe des Netzwerks.</p>
+</dd>
+<dt class="field-odd">Rückgabetyp<span class="colon">:</span></dt>
+<dd class="field-odd"><p>torch.Tensor</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="feature_engineering_and_model_2.model_2.test_step">
+<span class="sig-name descname"><span class="pre">test_step</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">batch</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">batch_idx</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#feature_engineering_and_model_2.model_2.test_step" title="Link to this definition"></a></dt>
+<dd><p>Führt einen Schritt im Testprozess durch.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameter<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>batch</strong> (<em>tuple</em>) – Batch von Daten und Labels.</p></li>
+<li><p><strong>batch_idx</strong> (<em>int</em>) – Index des Batches.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Rückgabe<span class="colon">:</span></dt>
+<dd class="field-even"><p><dl class="simple">
+<dt>Dictionary der Testergebnisse, einschließlich Verlust, Genauigkeit, Präzision,</dt><dd><p>Rückruf und F1-Score.</p>
+</dd>
+</dl>
+</p>
+</dd>
+<dt class="field-odd">Rückgabetyp<span class="colon">:</span></dt>
+<dd class="field-odd"><p>dict</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="feature_engineering_and_model_2.model_2.training_step">
+<span class="sig-name descname"><span class="pre">training_step</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">batch</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">batch_idx</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#feature_engineering_and_model_2.model_2.training_step" title="Link to this definition"></a></dt>
+<dd><p>Führt einen Schritt im Trainingsprozess durch.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameter<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>batch</strong> (<em>tuple</em>) – Batch von Daten und Labels.</p></li>
+<li><p><strong>batch_idx</strong> (<em>int</em>) – Index des Batches.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Rückgabe<span class="colon">:</span></dt>
+<dd class="field-even"><p>Verlustwert des Trainings.</p>
+</dd>
+<dt class="field-odd">Rückgabetyp<span class="colon">:</span></dt>
+<dd class="field-odd"><p>torch.Tensor</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="feature_engineering_and_model_2.model_2.validation_step">
+<span class="sig-name descname"><span class="pre">validation_step</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">batch</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">batch_idx</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#feature_engineering_and_model_2.model_2.validation_step" title="Link to this definition"></a></dt>
+<dd><p>Führt einen Schritt im Validierungsprozess durch.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameter<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>batch</strong> (<em>tuple</em>) – Batch von Daten und Labels.</p></li>
+<li><p><strong>batch_idx</strong> (<em>int</em>) – Index des Batches.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Rückgabe<span class="colon">:</span></dt>
+<dd class="field-even"><p>Verlustwert der Validierung.</p>
+</dd>
+<dt class="field-odd">Rückgabetyp<span class="colon">:</span></dt>
+<dd class="field-odd"><p>torch.Tensor</p>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="feature_engineering_and_model_2.prepare_data">
+<span class="sig-prename descclassname"><span class="pre">feature_engineering_and_model_2.</span></span><span class="sig-name descname"><span class="pre">prepare_data</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">features_dict</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">labels_dict</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#feature_engineering_and_model_2.prepare_data" title="Link to this definition"></a></dt>
+<dd><p>Führt die Merkmale und die zugehörigen Labels zusammen.</p>
+<p>Diese Funktion kombiniert die berechneten Merkmale und erstellt die zugehörigen Labels
+für die spätere Modellierung. Die Labels werden in dem Skript definiert.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameter<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>features_dict</strong> (<em>dict</em>) – Dictionary der Merkmale, wobei die Schlüssel die Lagerarten repräsentieren.</p></li>
+<li><p><strong>labels_dict</strong> (<em>dict</em>) – Dictionary der Labels, wobei die Schlüssel die Lagerarten repräsentieren.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Rückgabe<span class="colon">:</span></dt>
+<dd class="field-even"><p><dl class="simple">
+<dt>Tuple bestehend aus:</dt><dd><ul class="simple">
+<li><p>all_data (array): Array aller Merkmalsvektoren.</p></li>
+<li><p>all_labels (array): Array aller zugehörigen Labels.</p></li>
+</ul>
+</dd>
+</dl>
+</p>
+</dd>
+<dt class="field-odd">Rückgabetyp<span class="colon">:</span></dt>
+<dd class="field-odd"><p>tuple</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="feature_engineering_and_model_2.test_model">
+<span class="sig-prename descclassname"><span class="pre">feature_engineering_and_model_2.</span></span><span class="sig-name descname"><span class="pre">test_model</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">model</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">test_loader</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">title</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#feature_engineering_and_model_2.test_model" title="Link to this definition"></a></dt>
+<dd><p>Testet das Modell und visualisiert die Vorhersagen gegenüber den tatsächlichen Labels.</p>
+<p>Diese Funktion führt einen Testdurchlauf mit dem Modell durch, berechnet die Genauigkeit und
+plottet die Vorhersagen des Modells gegenüber den tatsächlichen Labels. Weil die Anzahl der
+Testdaten groß ist, sodass die Punkte der Vorhersagen des Modells gegenüber den tatsächlichen
+Labels schlecht abzulesen sind, wird ein bestimmtes Intervall in der Funktion implementiert,
+und zwar Intervall_A und Intervall_E. Ein Beispiel: (Intervall_A, Intervall_E = [0, len(test_labels)])
+für die gesamten Punkte zu plotten oder (Intervall_A, Intervall_E = [0, 50]) für die erste
+50 Punkt zu plotten.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameter<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>model</strong> (<em>pl.LightningModule</em>) – Das zu testende Modell.</p></li>
+<li><p><strong>test_loader</strong> (<em>DataLoader</em>) – DataLoader für die Testdaten.</p></li>
+<li><p><strong>title</strong> (<em>str</em>) – Titel für den Plot.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Rückgabe<span class="colon">:</span></dt>
+<dd class="field-even"><p>None</p>
+</dd>
+</dl>
+</dd></dl>
+
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="feature_engineering_and_model_1.html" class="btn btn-neutral float-left" title="Merkmalsextraktion und das Modell zur Klassifikation von normalen und fehlerhaften Lagern" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Zurück</a>
+        <a href="Verwendung.html" class="btn btn-neutral float-right" title="Verwendung" accesskey="n" rel="next">Weiter <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2024, Mohammad Alolabi.</p>
+  </div>
+
+  Erstellt mit <a href="https://www.sphinx-doc.org/">Sphinx</a> mit einem
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    bereitgestellt von <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

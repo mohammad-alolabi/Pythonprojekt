@@ -4,14 +4,31 @@ from bs4 import BeautifulSoup
 from urllib.parse import urljoin
 import scipy.io
 
-def download_file(url, folder, retries=3):
+def create_directory(path) :
     """
-    Lädt eine Datei von der angegebenen URL herunter und speichert sie im angegebenen Ordner.
+    Hier erstellt diese Funktion ein Verzeichnis, falls es noch nicht existiert.
 
     Args:
-        url (str): URL der Datei.
-        folder (str): Pfad zum Ordner, in dem die Datei gespeichert werden soll.
-        retries (int, optional): Anzahl der Versuche bei Fehlern. Standard ist 3.
+        path (str): Der Pfad des zu erstellenden Verzeichnisses.
+
+    Returns:
+        None
+    """
+    if not os.path.exists(path):
+        os.makedirs(path)
+
+def download_file(url, folder, retries=5):
+    """
+    Diese Funktion lädt eine Datei von der angegebenen URL herunter und speichert sie im angegebenen Ordner. 
+    Falls ein Fehler beim Herunterladen einer Datei kommt, wird es nochmal nach der Anzahl der 
+    Wiederholungsversuche 'retries' versucht, die Datei herunterzuladen. Nach dem Erreichen maximale 
+    Anzahl an Versuchen wird angezeigt, dass die Datei nicht heruntergeladen werden kann. Danach wird versucht, 
+    die nächste Datei herunterzuladen.
+
+    Args:
+        url (str): Die URL der Datei, die heruntergeladen werden soll.
+        folder (str): Der Ordner, in dem die Datei gespeichert werden soll.
+        retries (int, optional): Die Anzahl der Versuche bei fehlgeschlagenem Download. Standard ist 5 (Kann aber angepasst werden).
 
     Returns:
         None
@@ -44,35 +61,41 @@ def download_file(url, folder, retries=3):
 
 def process_99_mat_file(filename):
     """
-    Bearbeitet die '99.mat'-Datei, indem bestimmte Daten entfernt und andere geändert werden.
+    In der Datei '99.mat' wurde herausgefunden, dass es noch zusätzliche  Sensordaten gibt, die zur anderen
+    Datei gehören. Um Konflikte zu vermeiden, wird die '99.mat'-Datei bearbeitet, indem bestimmte Daten entfernt 
+    und andere geändert werden. Diese Funktion ist spezifisch für den Kontext der normalen Lagerdaten.
 
     Args:
-        filename (str): Pfad zur '99.mat'-Datei.
+        filename (str): Der Pfad zur '99.mat'-Datei.
 
     Returns:
         None
     """
     data = scipy.io.loadmat(filename)
 
-    # Daten entfernen und ändern
+    # Entfernen spezifischer Daten
     if 'X098_DE_time' in data:
         del data['X098_DE_time']
     if 'X098_FE_time' in data:
         del data['X098_FE_time']
     data['X099RPM'] = 1750
 
-    # Daten speichern
+    # Speichern der bearbeiteten Daten
     scipy.io.savemat(filename, data)
     print(f"'99.mat' wurde bearbeitet und gespeichert: {filename}")
 
 def download_data(base_url, main_folder, folders):
     """
-    Lädt die Daten von der angegebenen Basis-URL herunter und speichert sie in den spezifischen Ordnern.
+    Diese Funktion lädt Daten von einer Webseite herunter, die unter der Basis-URL verfügbar sind, 
+    und speichert sie in verschiedenen Unterordnern, die den spezifischen Kategorien entsprechen. 
+    Sie durchsucht die Webseite nach Tabellen, extrahiert die Download-Links und lädt die Dateien 
+    herunter, die dann in die entsprechenden Ordner gespeichert werden. Falls die Tabelle nicht 
+    gefunden wird, gibt die Funktion eine entsprechende Fehlermeldung aus.
 
     Args:
-        base_url (str): Basis-URL der Webseite mit den Daten.
-        main_folder (str): Pfad zum Hauptordner, in dem die Daten gespeichert werden sollen.
-        folders (list): Liste der spezifischen Ordnernamen.
+        base_url (str): Die Basis-URL der Webseite, die die Daten bereitstellt.
+        main_folder (str): Der Hauptordner, in dem die Daten gespeichert werden sollen.
+        folders (list): Eine Liste von Ordnernamen für spezifische Kategorien.
 
     Returns:
         None
@@ -80,11 +103,11 @@ def download_data(base_url, main_folder, folders):
     response = requests.get(base_url)
     soup = BeautifulSoup(response.content, 'html.parser')
 
-    # Finde die Tabelle mit den Daten
+    # Suche die Tabelle mit den Daten
     table = soup.find('table')
 
     if table:
-        # Gehe durch alle Zeilen der Tabelle, um die maximale Anzahl von Spalten zu ermitteln
+        # Bestimme die maximale Anzahl von Spalten
         max_columns = 0
         rows = table.find_all('tr')
         for row in rows:
@@ -97,19 +120,20 @@ def download_data(base_url, main_folder, folders):
             # Bestimme den aktuellen Ordner basierend auf der Spaltennummer
             folder = folders[col % len(folders)]
             folder_path = os.path.join(main_folder, folder)
+            create_directory(folder_path)
             
-            # Gehe durch alle Zeilen der Tabelle und hole die Zelle der aktuellen Spalte
+            # Iteriere über die Zeilen und hole die Links
             for row in rows:
                 cells = row.find_all(['td', 'th'])
                 if len(cells) > col:
                     cell = cells[col]
-                    # Finde alle Links in der Zelle
                     for link in cell.find_all('a'):
                         href = link.get('href')
                         if href and href.endswith('.mat'):
                             url = urljoin(base_url, href)
                             download_file(url, folder_path)
 
-        print("Alle Dateien wurden heruntergeladen und entsprechend der Kategorien gespeichert.")
+        print("Alle Dateien wurden heruntergeladen und in den spezifischen Ordnern gespeichert.")
     else:
         print("Tabelle mit den Daten wurde nicht gefunden.")
+

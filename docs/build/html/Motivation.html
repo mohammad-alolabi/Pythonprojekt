@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="de" data-content_root="./">
+<head>
+  <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Motivation &mdash; Neuronale Netzwerke zur Klassifikation von Kugellager-Fehlern 1.0.0 Dokumentation</title>
+      <link rel="stylesheet" type="text/css" href="_static/pygments.css?v=80d5e7a1" />
+      <link rel="stylesheet" type="text/css" href="_static/css/theme.css?v=19f00094" />
+
+  
+  <!--[if lt IE 9]>
+    <script src="_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+        <script src="_static/jquery.js?v=5d32c60e"></script>
+        <script src="_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+        <script src="_static/documentation_options.js?v=f029ec32"></script>
+        <script src="_static/doctools.js?v=888ff710"></script>
+        <script src="_static/sphinx_highlight.js?v=dc90522c"></script>
+        <script src="_static/translations.js?v=70a09b52"></script>
+    <script src="_static/js/theme.js"></script>
+    <link rel="index" title="Stichwortverzeichnis" href="genindex.html" />
+    <link rel="search" title="Suche" href="search.html" />
+    <link rel="next" title="Einleitung" href="Einleitung.html" />
+    <link rel="prev" title="Willkommen zur Dokumentation von normalen und fehlerhaften Kugellager-Klassifikation mit neuronalen Netzwerken" href="index.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search"  style="background: black" >
+
+          
+          
+          <a href="index.html" class="icon icon-home">
+            Neuronale Netzwerke zur Klassifikation von Kugellager-Fehlern
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
+    <input type="text" name="q" placeholder="Dokumentation durchsuchen" aria-label="Dokumentation durchsuchen" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">Inhaltsverzeichnis:</span></p>
+<ul class="current">
+<li class="toctree-l1 current"><a class="current reference internal" href="#">Motivation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="Einleitung.html">Einleitung</a></li>
+<li class="toctree-l1"><a class="reference internal" href="Dokumentation%20des%20Python-Codes.html">Dokumentation des Python-Codes</a></li>
+<li class="toctree-l1"><a class="reference internal" href="Verwendung.html">Verwendung</a></li>
+<li class="toctree-l1"><a class="reference internal" href="Ergebnisse.html">Ergebnisse und Diskussion</a></li>
+<li class="toctree-l1"><a class="reference internal" href="Zusammenfassung.html">Zusammenfassung</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu"  style="background: black" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="index.html">Neuronale Netzwerke zur Klassifikation von Kugellager-Fehlern</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="index.html" class="icon icon-home" aria-label="Home"></a></li>
+      <li class="breadcrumb-item active">Motivation</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="_sources/Motivation.rst.txt" rel="nofollow"> Quelltext anzeigen</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="motivation">
+<h1>Motivation<a class="headerlink" href="#motivation" title="Link to this heading"></a></h1>
+<p>Es ist wichtig, Maschinenkomponenten zu überwachen und Probleme frühzeitig zu erkennen, um
+sicherzustellen, dass industrielle Anlagen sicher und effizient arbeiten. Lager sind besonders
+wichtige Teile von Maschinen, weil sie die Hauptkomponente in einer rotierenden Maschine
+(Motor, Wellen, usw.) darstellen. Sie fallen jedoch oft aus und verursachen Betriebsstörungen.
+Mit der Verfügbarkeit von Sensordaten und dem Fortschritt im Bereich des Machine Learnings bietet
+der Einsatz von neuronalen Netzwerken die Möglichkeit, Probleme in Maschinenteilen frühzeitig zu
+erkennen.</p>
+<p>In dieser Arbeit wird ein einfaches Neuronales Netz (Feedforward Netze) mit PyTorch bzw.
+Pytorch Lightning programmiert. Das Projekt konzentriert sich auf die Analyse von Kugellager-Testdaten,
+um zwischen normalen und fehlerhaften Lagern zu unterscheiden. Die Daten umfassen verschiedene Arten
+von Fehlern, darunter Defekte Innenring, Außenring und Wälzkörper. Die Testdaten können von
+der Webseite der [Case Western Reserve University Bearing Data Center](<a class="reference external" href="https://engineering.case.edu/bearingdatacenter/download-data-file">https://engineering.case.edu/bearingdatacenter/download-data-file</a>)
+heruntergeladen werden. Die Herausforderung besteht darin, mit dem Neuronalen Netz die Klassen
+(Normal, Fehlerhaft) zu identifizieren. Eine weitere große Herausforderung liegt darin, die Art der
+fehlerhaften Lager zu klassifizieren. Dies erfordert nicht nur eine Vorverarbeitung der Daten,
+sondern auch die Anpassung der Hyperparameter des Netzwerks, um die verschiedenen Klassen zu erkennen.</p>
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="index.html" class="btn btn-neutral float-left" title="Willkommen zur Dokumentation von normalen und fehlerhaften Kugellager-Klassifikation mit neuronalen Netzwerken" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Zurück</a>
+        <a href="Einleitung.html" class="btn btn-neutral float-right" title="Einleitung" accesskey="n" rel="next">Weiter <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2024, Mohammad Alolabi.</p>
+  </div>
+
+  Erstellt mit <a href="https://www.sphinx-doc.org/">Sphinx</a> mit einem
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    bereitgestellt von <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

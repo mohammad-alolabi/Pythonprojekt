@@ -1,4 +1,3 @@
-import os
 import gc
 import torch
 from torch.utils.data import DataLoader, TensorDataset, random_split
@@ -11,10 +10,11 @@ from feature_engineering_and_model_2 import compute_features, prepare_data, mode
 # Konfigurierbare Parameter
 Umlaufzeit = 0.033 * 3
 train_size, val_size = 0.6, 0.2
-batch_size = 45
+batch_size = 40
 max_epochs = 100
 learning_rate = 0.0001
-hidden_sizes = [100, 50, 25]
+hidden_sizes = [200, 200, 200, 200]
+
 
 # Pfade zu den Ordnern mit den .mat-Dateien
 folder_paths_FL = {
@@ -155,7 +155,7 @@ train_size_FE = int(train_size * len(dataset_FE))
 val_size_FE = int(val_size * len(dataset_FE))
 test_size_FE = len(dataset_FE) - train_size_FE - val_size_FE
 train_dataset_FE, val_dataset_FE, test_dataset_FE = random_split(dataset_FE, [train_size_FE, val_size_FE, test_size_FE])
-
+#%%
 # DataLoader erstellen
 batch_size_test = test_size_DE
 train_loader_DE = DataLoader(train_dataset_DE, batch_size, shuffle=True)
@@ -168,7 +168,7 @@ test_loader_FE = DataLoader(test_dataset_FE, batch_size_FE)
 
 # Hyperparameter definieren
 input_size = all_data_DE.shape[1]  # Anzahl der Merkmale
-output_size = len(labels_FL)       # Anzahl der Klassen
+output_size = len(labels_FL)       # Anzahl der Klassen bzw. die labls
 
 # TensorBoard Logger einrichten
 logger = TensorBoardLogger("tb_logs", name="model_2")
@@ -176,17 +176,14 @@ logger = TensorBoardLogger("tb_logs", name="model_2")
 # Modell instanziieren
 model = model_2(input_size, hidden_sizes, output_size, learning_rate)
 
-# Training des Modells mit Early Stopping
-trainer = pl.Trainer(
-    max_epochs=max_epochs,
-    logger=logger,
-    callbacks=[pl.callbacks.EarlyStopping(monitor='val_loss', patience=7)]
-)
+
+# Training des Modells
+trainer = pl.Trainer(max_epochs = max_epochs, logger=logger)
 trainer.fit(model, train_loader_DE, val_loader_DE)
-trainer.fit(model, train_loader_FE, val_loader_FE)
+# trainer.fit(model, train_loader_FE, val_loader_FE)
 
 # Testen des Modells
 trainer.test(model, test_loader_DE)
-trainer.test(model, test_loader_FE)
+# trainer.test(model, test_loader_FE)
 test_model(model, test_loader_DE, "Test_DE")
 test_model(model, test_loader_FE, "Test_FE")

@@ -1,0 +1,162 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="de" data-content_root="./">
+<head>
+  <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Einleitung &mdash; Neuronale Netzwerke zur Klassifikation von Kugellager-Fehlern 1.0.0 Dokumentation</title>
+      <link rel="stylesheet" type="text/css" href="_static/pygments.css?v=80d5e7a1" />
+      <link rel="stylesheet" type="text/css" href="_static/css/theme.css?v=19f00094" />
+
+  
+  <!--[if lt IE 9]>
+    <script src="_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+        <script src="_static/jquery.js?v=5d32c60e"></script>
+        <script src="_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+        <script src="_static/documentation_options.js?v=f029ec32"></script>
+        <script src="_static/doctools.js?v=888ff710"></script>
+        <script src="_static/sphinx_highlight.js?v=dc90522c"></script>
+        <script src="_static/translations.js?v=70a09b52"></script>
+    <script src="_static/js/theme.js"></script>
+    <link rel="index" title="Stichwortverzeichnis" href="genindex.html" />
+    <link rel="search" title="Suche" href="search.html" />
+    <link rel="next" title="Dokumentation des Python-Codes" href="Dokumentation%20des%20Python-Codes.html" />
+    <link rel="prev" title="Motivation" href="Motivation.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search"  style="background: black" >
+
+          
+          
+          <a href="index.html" class="icon icon-home">
+            Neuronale Netzwerke zur Klassifikation von Kugellager-Fehlern
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
+    <input type="text" name="q" placeholder="Dokumentation durchsuchen" aria-label="Dokumentation durchsuchen" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">Inhaltsverzeichnis:</span></p>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="Motivation.html">Motivation</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">Einleitung</a></li>
+<li class="toctree-l1"><a class="reference internal" href="Dokumentation%20des%20Python-Codes.html">Dokumentation des Python-Codes</a></li>
+<li class="toctree-l1"><a class="reference internal" href="Verwendung.html">Verwendung</a></li>
+<li class="toctree-l1"><a class="reference internal" href="Ergebnisse.html">Ergebnisse, Zusammenfassung und Schlussfolgerung</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu"  style="background: black" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="index.html">Neuronale Netzwerke zur Klassifikation von Kugellager-Fehlern</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="index.html" class="icon icon-home" aria-label="Home"></a></li>
+      <li class="breadcrumb-item active">Einleitung</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="_sources/Einleitung.rst.txt" rel="nofollow"> Quelltext anzeigen</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="einleitung">
+<h1>Einleitung<a class="headerlink" href="#einleitung" title="Link to this heading"></a></h1>
+<p>In dieser Arbeit wird ein neuronales Netzwerk angewendet, um spezifische Probleme von Kugellagern
+anhand von Testdaten zu klassifizieren. Die verwendeten Beschleunigungsdaten wurden vom Bearing Data
+Center der Case Western Reserve University bereitgestellt. Diese Daten umfassen Vibrationsmessungen an
+verschiedenen Stellen, sowohl in der Nähe als auch entfernt von den Motorlagern.</p>
+<p>Wie in der folgenden Abbildung (1) dargestellt, besteht der Prüfstand aus einem 2-PS-Motor (links), einem
+Drehmomentwandler/-encoder (Mitte) und einem Dynamometer (rechts). Vibrationsmessungen wurden mit drei
+Beschleunigungssensoren durchgeführt, die in der 12-Uhr-Position am Gehäuse der Antriebsseite (DE)
+und der Ventilatorseite (FE) angebracht waren. Für die Antriebsseite (DE) und die Lüfterseite (FE)
+wurden SKF-Rillenkugellager der Typen 6205-2RS JEM bzw. 6203-2RS JEM verwendet. Weitere Informationen
+zur Datenerfassung und den Arten von Fehlern sind detailliert auf der Webseite des Bearing Data Centers <a class="footnote-reference brackets" href="#id3" id="id1" role="doc-noteref"><span class="fn-bracket">[</span>1<span class="fn-bracket">]</span></a> dokumentiert.</p>
+<figure class="align-center" id="id5">
+<img alt="Prüfstand zur Erfassung von Vibrationsdaten" src="_images/Figure1.png" />
+<figcaption>
+<p><span class="caption-text">Abbildung (1): Lagerprüfstand. Quelle: Neupane <a class="footnote-reference brackets" href="#id4" id="id2" role="doc-noteref"><span class="fn-bracket">[</span>2<span class="fn-bracket">]</span></a>.</span><a class="headerlink" href="#id5" title="Link to this image"></a></p>
+</figcaption>
+</figure>
+<p>In dieser Arbeit werden die Vibrationsmessungen beider Sensoren sowie die Daten normaler und
+fehlerhafter Lager an der Antriebsseite genutzt. Die Daten wurden mit einer Abtastrate von
+12.000 Proben/Sekunde erfasst, um ein Modell zur Klassifikation zu erstellen. Zunächst werden
+die Funktionen und Module bereitgestellt, um die Daten herunterzuladen und zu verarbeiten. Diese
+Module umfassen:</p>
+<ul class="simple">
+<li><p><cite>data_download.py</cite>: Funktionen zum Erstellen von Verzeichnissen und Herunterladen der Daten.</p></li>
+<li><p><cite>data_processing.py</cite>: Funktionen zum Laden und grafische Darstellung der Daten.</p></li>
+<li><p><cite>feature_engineering_and_model_1.py</cite>: Funktionen zur Merkmalsextraktion und das erste Modell für die Klassifikation der normalen und fehlerhaften Lager.</p></li>
+<li><p><cite>feature_engineering_and_model_2.py</cite>: Funktionen zur erweiterten Merkmalsextraktion und das zweite Modell zur Klassifikation der Fehlerarten.</p></li>
+</ul>
+<p>Danach werden diese Funktionen in den folgenden Skripten aufgerufen und ausgeführt:</p>
+<ul class="simple">
+<li><p><cite>main_data_download.py</cite>: Hauptskript zum Herunterladen der Daten und zur Strukturierung der Verzeichnisse.</p></li>
+<li><p><cite>main_modell_1.py</cite>: Skript zur Anwendung des ersten Modells zur Unterscheidung zwischen normalen und fehlerhaften Lagern.</p></li>
+<li><p><cite>main_modell_2.py</cite>: Skript zur Anwendung des zweiten Modells zur Klassifikation der verschiedenen Fehlerarten.</p></li>
+</ul>
+<p>Die entsprechenden Skripte und Module werden detailliert in den Kapiteln zur Dokumentation des
+Python-Codes und zur Verwendung beschrieben, gefolgt von einer Diskussion der Ergebnisse.</p>
+<p class="rubric">Referenzen</p>
+<aside class="footnote-list brackets">
+<aside class="footnote brackets" id="id3" role="doc-footnote">
+<span class="label"><span class="fn-bracket">[</span><a role="doc-backlink" href="#id1">1</a><span class="fn-bracket">]</span></span>
+<p>Bearing Data Center, Case Western Reserve University. „Webseite.“ <a class="reference external" href="https://engineering.case.edu/bearingdatacenter">https://engineering.case.edu/bearingdatacenter</a>. last visit 11.06.2024</p>
+</aside>
+<aside class="footnote brackets" id="id4" role="doc-footnote">
+<span class="label"><span class="fn-bracket">[</span><a role="doc-backlink" href="#id2">2</a><span class="fn-bracket">]</span></span>
+<p>Neupane, Dhiraj and Seok, Jongwon „Bearing Fault Detection and Diagnosis Using Case Western Reserve University Dataset With Deep Learning Approaches: A Review.“ <em>Information</em>, vol. 2020, IEEE Access, pag. 93155-93178, doi: 10.1109/ACCESS.2020.2990528</p>
+</aside>
+</aside>
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="Motivation.html" class="btn btn-neutral float-left" title="Motivation" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Zurück</a>
+        <a href="Dokumentation%20des%20Python-Codes.html" class="btn btn-neutral float-right" title="Dokumentation des Python-Codes" accesskey="n" rel="next">Weiter <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2024, Mohammad Alolabi.</p>
+  </div>
+
+  Erstellt mit <a href="https://www.sphinx-doc.org/">Sphinx</a> mit einem
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    bereitgestellt von <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

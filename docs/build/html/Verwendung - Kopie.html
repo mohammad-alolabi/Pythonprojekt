@@ -1,0 +1,472 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="de" data-content_root="./">
+<head>
+  <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Verwendung &mdash; Neuronale Netzwerke zur Klassifikation von Kugellager-Fehlern 1.0.0 Dokumentation</title>
+      <link rel="stylesheet" type="text/css" href="_static/pygments.css?v=80d5e7a1" />
+      <link rel="stylesheet" type="text/css" href="_static/css/theme.css?v=19f00094" />
+
+  
+  <!--[if lt IE 9]>
+    <script src="_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+        <script src="_static/jquery.js?v=5d32c60e"></script>
+        <script src="_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+        <script src="_static/documentation_options.js?v=f029ec32"></script>
+        <script src="_static/doctools.js?v=888ff710"></script>
+        <script src="_static/sphinx_highlight.js?v=dc90522c"></script>
+        <script src="_static/translations.js?v=70a09b52"></script>
+        <script async="async" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+    <script src="_static/js/theme.js"></script>
+    <link rel="index" title="Stichwortverzeichnis" href="genindex.html" />
+    <link rel="search" title="Suche" href="search.html" />
+    <link rel="next" title="Ergebnisse, Zusammenfassung und Schlussfolgerung" href="Ergebnisse.html" />
+    <link rel="prev" title="Verwendung" href="Verwendung.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search"  style="background: black" >
+
+          
+          
+          <a href="index.html" class="icon icon-home">
+            Neuronale Netzwerke zur Klassifikation von Kugellager-Fehlern
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
+    <input type="text" name="q" placeholder="Dokumentation durchsuchen" aria-label="Dokumentation durchsuchen" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">Inhaltsverzeichnis:</span></p>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="Motivation.html">Motivation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="Einleitung.html">Einleitung</a></li>
+<li class="toctree-l1"><a class="reference internal" href="Dokumentation%20des%20Python-Codes.html">Dokumentation des Python-Codes</a></li>
+<li class="toctree-l1"><a class="reference internal" href="Verwendung.html">Verwendung</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">Verwendung</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#installation">Installation</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#nutzung-der-skripte">Nutzung der Skripte</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="Ergebnisse.html">Ergebnisse, Zusammenfassung und Schlussfolgerung</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu"  style="background: black" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="index.html">Neuronale Netzwerke zur Klassifikation von Kugellager-Fehlern</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="index.html" class="icon icon-home" aria-label="Home"></a></li>
+      <li class="breadcrumb-item active">Verwendung</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="_sources/Verwendung - Kopie.rst.txt" rel="nofollow"> Quelltext anzeigen</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="verwendung">
+<h1>Verwendung<a class="headerlink" href="#verwendung" title="Link to this heading"></a></h1>
+<p>In diesem Kapitel wird die Installation und Nutzung der Skripte und Module beschrieben. Die Installation umfasst die notwendigen Bibliotheken, die installiert werden müssen, bevor der Code ausgeführt werden kann. Im nächsten Abschnitt wird erläutert, wie die Skripte und Module in einer bestimmten Reihenfolge ausgeführt werden sollten.</p>
+<section id="installation">
+<h2>Installation<a class="headerlink" href="#installation" title="Link to this heading"></a></h2>
+<p>Vor der Nutzung der Skripte müssen folgende Bibliotheken installiert werden:</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>pip<span class="w"> </span>install<span class="w"> </span>requests<span class="w"> </span>beautifulsoup4
+pip<span class="w"> </span>install<span class="w"> </span>numpy
+pip<span class="w"> </span>install<span class="w"> </span>scipy
+pip<span class="w"> </span>install<span class="w"> </span>torchmetrics
+pip<span class="w"> </span>install<span class="w"> </span>tensorboard
+pip<span class="w"> </span>install<span class="w"> </span>sklearn
+pip<span class="w"> </span>install<span class="w"> </span>torch
+pip<span class="w"> </span>install<span class="w"> </span>pytorch-lightning
+pip<span class="w"> </span>install<span class="w"> </span>matplotlib
+pip<span class="w"> </span>install<span class="w"> </span>scikit-learn
+</pre></div>
+</div>
+</section>
+<section id="nutzung-der-skripte">
+<h2>Nutzung der Skripte<a class="headerlink" href="#nutzung-der-skripte" title="Link to this heading"></a></h2>
+<p>Zunächst sollten die Skripte <cite>data_download_script.py</cite> und <cite>data_download_script.py</cite> verwendet werden, um die Daten herunterzuladen, die dann in den Modulen weiterverarbeitet werden können. Das Skript <cite>data_download_script.py</cite> ist das Hauptskript für den Download der Daten. Es nutzt Funktionen aus <cite>data_download.py</cite>, um Verzeichnisse für normale und fehlerhafte Kugellager zu erstellen und die entsprechenden Daten herunterzuladen. Es definiert die Basis-URLs, die Struktur der Unterverzeichnisse und ruft dann die Funktion <cite>download_data</cite> auf, um den Downloadprozess zu starten.</p>
+<p>Nach dem Herunterladen der Daten können die Module <cite>data_processing.py</cite>, <cite>feature_engineering_and_model_1.py</cite>, und <cite>feature_engineering_and_model_2.py</cite> verwendet werden, um die Daten zu verarbeiten, Merkmale zu extrahieren und die Modelle zu trainieren und zu testen.</p>
+<ol class="arabic">
+<li><p><strong>Daten herunterladen</strong>:</p>
+<p>Das Skript <cite>data_download_script.py</cite> lädt die Daten herunter und organisiert sie in Verzeichnissen für normale und fehlerhafte Lager. Die URLs und Zielverzeichnisse sind in <cite>data_download_script.py</cite> definiert.</p>
+<p>Beispielcode:</p>
+</li>
+</ol>
+<blockquote>
+<div><div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">data_download</span> <span class="kn">import</span> <span class="n">create_directory</span><span class="p">,</span> <span class="n">download_data</span>
+
+<span class="c1"># Basis-URL der Webseite</span>
+<span class="n">base_url_FL</span> <span class="o">=</span> <span class="s2">&quot;https://engineering.case.edu/bearingdatacenter/12k-drive-end-bearing-fault-data&quot;</span>
+<span class="n">base_url_NL</span> <span class="o">=</span> <span class="s2">&quot;https://engineering.case.edu/bearingdatacenter/normal-baseline-data&quot;</span>
+
+<span class="c1"># Erstelle den Hauptordner, wenn er nicht existiert</span>
+<span class="n">main_folder_FL</span> <span class="o">=</span> <span class="s2">&quot;Fehlerhafte_Lager&quot;</span>
+<span class="n">create_directory</span><span class="p">(</span><span class="n">main_folder_FL</span><span class="p">)</span>
+<span class="n">main_folder_NL</span> <span class="o">=</span> <span class="s2">&quot;Normale_Lager&quot;</span>
+<span class="n">create_directory</span><span class="p">(</span><span class="n">main_folder_NL</span><span class="p">)</span>
+
+<span class="c1"># Spezifische Ordnernamen in der gewünschten Reihenfolge</span>
+<span class="n">folders_FL</span> <span class="o">=</span> <span class="p">[</span><span class="s2">&quot;OR@6&quot;</span><span class="p">,</span> <span class="s2">&quot;OR@3&quot;</span><span class="p">,</span> <span class="s2">&quot;OR@12&quot;</span><span class="p">,</span> <span class="s2">&quot;IR&quot;</span><span class="p">,</span> <span class="s2">&quot;B&quot;</span><span class="p">]</span>
+<span class="n">folders_NL</span> <span class="o">=</span> <span class="p">[</span><span class="s2">&quot;NL&quot;</span><span class="p">]</span>
+
+<span class="c1"># Daten für normale Lager herunterladen</span>
+<span class="n">download_data</span><span class="p">(</span><span class="n">base_url_NL</span><span class="p">,</span> <span class="n">main_folder_NL</span><span class="p">,</span> <span class="n">folders_NL</span><span class="p">)</span>
+<span class="c1"># Daten für fehlerhafte Lager herunterladen</span>
+<span class="n">download_data</span><span class="p">(</span><span class="n">base_url_FL</span><span class="p">,</span> <span class="n">main_folder_FL</span><span class="p">,</span> <span class="n">folders_FL</span><span class="p">)</span>
+</pre></div>
+</div>
+</div></blockquote>
+<ol class="arabic" start="2">
+<li><p><strong>Daten verarbeiten und visualisieren</strong>:</p>
+<p>Dafür wird das Modul <a href="#id1"><span class="problematic" id="id2">`</span></a>data_processing.py`verwendet, um die heruntergeladenen .mat-Dateien zu laden, Daten zu extrahieren, ggf. daten zu verarbeiten, Zeitvektoren zu erstellen und die Daten zu visualisieren.</p>
+<p>Beispielcode:</p>
+</li>
+</ol>
+<blockquote>
+<div><div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">data_processing</span> <span class="kn">import</span> <span class="n">load_mat_files_from_folder</span><span class="p">,</span> <span class="n">extract_data</span><span class="p">,</span> <span class="n">create_time_vectors</span><span class="p">,</span> <span class="n">plot_multiple_measurements</span>
+
+
+<span class="c1"># Pfade zu den Ordnern mit den .mat-Dateien</span>
+<span class="n">folder_paths_FL</span> <span class="o">=</span> <span class="p">{</span>
+    <span class="s1">&#39;IR&#39;</span><span class="p">:</span> <span class="sa">r</span><span class="s1">&#39;.\Fehlerhafte_Lager\IR&#39;</span><span class="p">,</span>
+    <span class="s1">&#39;B&#39;</span><span class="p">:</span> <span class="sa">r</span><span class="s1">&#39;.\Fehlerhafte_Lager\B&#39;</span><span class="p">,</span>
+    <span class="s1">&#39;OR3&#39;</span><span class="p">:</span> <span class="sa">r</span><span class="s1">&#39;.\Fehlerhafte_Lager\OR@3&#39;</span><span class="p">,</span>
+    <span class="s1">&#39;OR6&#39;</span><span class="p">:</span> <span class="sa">r</span><span class="s1">&#39;.\Fehlerhafte_Lager\OR@6&#39;</span><span class="p">,</span>
+    <span class="s1">&#39;OR12&#39;</span><span class="p">:</span> <span class="sa">r</span><span class="s1">&#39;.\Fehlerhafte_Lager\OR@12&#39;</span>
+<span class="p">}</span>
+<span class="n">folder_path_NL</span> <span class="o">=</span> <span class="sa">r</span><span class="s1">&#39;.\Normale_Lager\NL&#39;</span>
+
+<span class="c1"># Laden der Daten</span>
+<span class="n">mat_data_FL</span> <span class="o">=</span> <span class="p">{</span><span class="n">key</span><span class="p">:</span> <span class="n">load_mat_files_from_folder</span><span class="p">(</span><span class="n">path</span><span class="p">)</span> <span class="k">for</span> <span class="n">key</span><span class="p">,</span> <span class="n">path</span> <span class="ow">in</span> <span class="n">folder_paths_FL</span><span class="o">.</span><span class="n">items</span><span class="p">()}</span>
+<span class="n">mat_data_NL</span> <span class="o">=</span> <span class="n">load_mat_files_from_folder</span><span class="p">(</span><span class="n">folder_path_NL</span><span class="p">)</span>
+
+<span class="c1"># Schlüssel zum Extrahieren</span>
+<span class="n">keys</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;DE_time&#39;</span><span class="p">,</span> <span class="s1">&#39;FE_time&#39;</span><span class="p">]</span>
+
+<span class="c1"># Extrahieren der Daten</span>
+<span class="n">extracted_NL_data</span> <span class="o">=</span> <span class="n">extract_data</span><span class="p">(</span><span class="n">mat_data_NL</span><span class="p">,</span> <span class="n">keys</span><span class="p">)</span>
+<span class="n">extracted_FL_data</span> <span class="o">=</span> <span class="p">{</span><span class="n">key</span><span class="p">:</span> <span class="n">extract_data</span><span class="p">(</span><span class="n">data</span><span class="p">,</span> <span class="n">keys</span><span class="p">)</span> <span class="k">for</span> <span class="n">key</span><span class="p">,</span> <span class="n">data</span> <span class="ow">in</span> <span class="n">mat_data_FL</span><span class="o">.</span><span class="n">items</span><span class="p">()}</span>
+
+<span class="c1"># Erstellen der Zeitvektoren</span>
+<span class="n">t_NL_DE</span> <span class="o">=</span> <span class="n">create_time_vectors</span><span class="p">(</span><span class="n">extracted_NL_data</span><span class="p">[</span><span class="s1">&#39;DE_time&#39;</span><span class="p">])</span>
+<span class="n">t_NL_FE</span> <span class="o">=</span> <span class="n">create_time_vectors</span><span class="p">(</span><span class="n">extracted_NL_data</span><span class="p">[</span><span class="s1">&#39;FE_time&#39;</span><span class="p">])</span>
+
+<span class="n">t_FL_DE</span> <span class="o">=</span> <span class="p">{</span><span class="n">key</span><span class="p">:</span> <span class="n">create_time_vectors</span><span class="p">(</span><span class="n">data</span><span class="p">[</span><span class="s1">&#39;DE_time&#39;</span><span class="p">])</span> <span class="k">for</span> <span class="n">key</span><span class="p">,</span> <span class="n">data</span> <span class="ow">in</span> <span class="n">extracted_FL_data</span><span class="o">.</span><span class="n">items</span><span class="p">()}</span>
+<span class="n">t_FL_FE</span> <span class="o">=</span> <span class="p">{</span><span class="n">key</span><span class="p">:</span> <span class="n">create_time_vectors</span><span class="p">(</span><span class="n">data</span><span class="p">[</span><span class="s1">&#39;FE_time&#39;</span><span class="p">])</span> <span class="k">for</span> <span class="n">key</span><span class="p">,</span> <span class="n">data</span> <span class="ow">in</span> <span class="n">extracted_FL_data</span><span class="o">.</span><span class="n">items</span><span class="p">()}</span>
+
+<span class="c1"># Beispiel: Plotten der ersten normalen Lager DE-Messung und der ersten fehlerhaften Lager DE-Messung für IR</span>
+<span class="n">plot_multiple_measurements</span><span class="p">(</span>
+    <span class="p">[</span><span class="n">t_FL_DE</span><span class="p">[</span><span class="s1">&#39;OR6&#39;</span><span class="p">][</span><span class="mi">0</span><span class="p">],</span> <span class="n">t_FL_DE</span><span class="p">[</span><span class="s1">&#39;OR3&#39;</span><span class="p">][</span><span class="mi">0</span><span class="p">],</span> <span class="n">t_FL_DE</span><span class="p">[</span><span class="s1">&#39;IR&#39;</span><span class="p">][</span><span class="mi">0</span><span class="p">],</span> <span class="n">t_FL_DE</span><span class="p">[</span><span class="s1">&#39;OR12&#39;</span><span class="p">][</span><span class="mi">0</span><span class="p">],</span> <span class="n">t_FL_DE</span><span class="p">[</span><span class="s1">&#39;B&#39;</span><span class="p">][</span><span class="mi">0</span><span class="p">],</span> <span class="n">t_NL_DE</span><span class="p">[</span><span class="mi">1</span><span class="p">]],</span>
+    <span class="p">[</span><span class="n">extracted_FL_data</span><span class="p">[</span><span class="s1">&#39;OR6&#39;</span><span class="p">][</span><span class="s1">&#39;DE_time&#39;</span><span class="p">][</span><span class="mi">0</span><span class="p">],</span> <span class="n">extracted_FL_data</span><span class="p">[</span><span class="s1">&#39;OR3&#39;</span><span class="p">][</span><span class="s1">&#39;DE_time&#39;</span><span class="p">][</span><span class="mi">0</span><span class="p">],</span>
+     <span class="n">extracted_FL_data</span><span class="p">[</span><span class="s1">&#39;IR&#39;</span><span class="p">][</span><span class="s1">&#39;DE_time&#39;</span><span class="p">][</span><span class="mi">0</span><span class="p">],</span> <span class="n">extracted_FL_data</span><span class="p">[</span><span class="s1">&#39;OR12&#39;</span><span class="p">][</span><span class="s1">&#39;DE_time&#39;</span><span class="p">][</span><span class="mi">0</span><span class="p">],</span>
+     <span class="n">extracted_FL_data</span><span class="p">[</span><span class="s1">&#39;B&#39;</span><span class="p">][</span><span class="s1">&#39;DE_time&#39;</span><span class="p">][</span><span class="mi">0</span><span class="p">],</span> <span class="n">extracted_NL_data</span><span class="p">[</span><span class="s1">&#39;DE_time&#39;</span><span class="p">][</span><span class="mi">1</span><span class="p">]],</span>
+    <span class="p">[</span><span class="s1">&#39;Fehlerhafte Lager OR6 DE-Messung&#39;</span><span class="p">,</span> <span class="s1">&#39;Fehlerhafte Lager OR3 DE-Messung&#39;</span><span class="p">,</span> <span class="s1">&#39;Fehlerhafte Lager IR DE-Messung&#39;</span><span class="p">,</span>
+     <span class="s1">&#39;Fehlerhafte Lager OR12 DE-Messung&#39;</span><span class="p">,</span> <span class="s1">&#39;Fehlerhafte Lager B DE-Messung&#39;</span><span class="p">,</span> <span class="s1">&#39;Normale Lager DE-Messung&#39;</span><span class="p">]</span>
+<span class="p">)</span>
+</pre></div>
+</div>
+</div></blockquote>
+<p>Das unten resultierende Diagramm zeigt die Vibrationen der Kugellager in verschiedenen Zuständen.
+Es werden die Vibrationen von fehlerhaften Lagern in unterschiedlichen Zuständen (IR, B,
+OR&#64;3, OR&#64;6, <a class="reference external" href="mailto:OR&#37;&#52;&#48;12">OR<span>&#64;</span>12</a>) und die Vibrationen eines normalen Lagers dargestellt.</p>
+<figure class="align-center" id="id3">
+<img alt="" src="_images/Figure2.png" />
+<figcaption>
+<p><span class="caption-text">Abbildung (2): Vibrationen der Kugellager in verschiedenen Zuständen.</span><a class="headerlink" href="#id3" title="Link to this image"></a></p>
+</figcaption>
+</figure>
+<ol class="arabic" start="3">
+<li><p><strong>Merkmale berechnen und Modell trainieren</strong>:</p>
+<p>Hier werden <cite>feature_engineering_and_model_1.py</cite> und <cite>feature_engineering_and_model_2.py</cite> verwendet, um Merkmale zu berechnen, die Daten für das Modell vorzubereiten und das neuronale Netzwerk zu trainieren.</p>
+<p><strong>Erstes Modell zur Klassifikation der normalen und fehlerhaften Lager (`feature_engineering_and_model_1.py`)</strong>:</p>
+<ul>
+<li><p><strong>Berechnung der Merkmale</strong>: Die Funktion <cite>compute_features</cite> berechnet Merkmale wie die Wölbung (Kurtosis) und die Standardabweichung über festgelegte Intervalle.</p>
+<blockquote>
+<div><ul>
+<li><p>Um zusätzliche Merkmale wie z.B. den Spitzenwert hinzuzufügen, soll die Funktion entsprechend erweitert werden:</p>
+<blockquote>
+<div><div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">peak_values</span> <span class="o">=</span> <span class="p">[]</span>
+<span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">num_intervals</span><span class="p">):</span>
+    <span class="c1">#... (In For-Schleif bleibt alles unveränderlich.)</span>
+    <span class="c1">#...</span>
+    <span class="c1">#...</span>
+
+    <span class="c1"># Berechnung des Spitzenwerts</span>
+    <span class="n">interval_peak</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">max</span><span class="p">(</span><span class="n">interval_data</span><span class="p">)</span>
+    <span class="n">peak_values</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">interval_peak</span><span class="p">)</span>
+
+<span class="n">features</span> <span class="o">=</span> <span class="p">[</span>
+         <span class="c1">#...</span>
+         <span class="c1">#...</span>
+        <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">peak_values</span><span class="p">)</span><span class="o">.</span><span class="n">reshape</span><span class="p">(</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span>
+            <span class="p">]</span>
+</pre></div>
+</div>
+</div></blockquote>
+</li>
+</ul>
+</div></blockquote>
+</li>
+<li><p><strong>Daten vorbereiten</strong>: Die Funktion <cite>prepare_data</cite> kombiniert die berechneten Merkmale und erstellt die zugehörigen Labels. Diese Funktion erzeugt eine Feature-Matrix und einen Label-Vektor zur Klassifikation zwischen normalen und fehlerhaften Lagern.</p></li>
+<li><p><strong>Modell</strong>: Das Feedforward-Neuronale Netzwerk (<cite>model_1</cite>) wird verwendet, um die Klassifikation durchzuführen. Der Optimierer und die Verlustfunktion können angepasst werden, um die Trainingseffizienz zu verbessern.</p>
+<blockquote>
+<div><ul>
+<li><p><strong>Verlustfunktion</strong>: Die Binary Cross-Entropy Loss (BCELoss) wird verwendet. Sie ist ideal für binäre Klassifikationsprobleme, da sie den Unterschied zwischen den vorhergesagten Wahrscheinlichkeiten und den tatsächlichen Binärlabels misst. Der Verlustwert wird als Mittelwert der negativen logarithmischen Differenz zwischen den tatsächlichen Labels und den vorhergesagten Wahrscheinlichkeiten berechnet.</p>
+<blockquote>
+<div><div class="math notranslate nohighlight">
+\[L_{BCE}(y, \hat{y}) = - \frac{1}{N} \sum_{i=1}^N \left[y_i \log(\hat{y}_i) + (1 - y_i) \log(1 - \hat{y}_i)\right]\]</div>
+</div></blockquote>
+</li>
+</ul>
+<blockquote>
+<div><p>Um die Verlustfunktion zu ändern, aktualisiere die Methoden <cite>training_step</cite>, <cite>validation_step</cite>, und <cite>test_step</cite>, um eine neue Verlustfunktion zu verwenden. Beispielsweise könnte <cite>BCELoss</cite> durch <cite>CrossEntropyLoss</cite> oder eine benutzerdefinierte Verlustfunktion ersetzt werden.</p>
+<blockquote>
+<div><p>Beispiel:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">loss</span> <span class="o">=</span> <span class="n">nn</span><span class="o">.</span><span class="n">CrossEntropyLoss</span><span class="p">()(</span><span class="n">outputs</span><span class="p">,</span> <span class="n">labels</span><span class="o">.</span><span class="n">long</span><span class="p">())</span>
+</pre></div>
+</div>
+</div></blockquote>
+<p>Um den Optimierer zu ändern, aktualisiere die Methode <cite>configure_optimizers</cite>, um einen anderen Optimierer zu verwenden, wie z.B. <cite>SGD</cite>, <cite>AdamW</cite> oder <cite>RMSprop</cite>. Du kannst zusätzliche Parameter für die Optimierer einstellen oder einen neuen Lernratenplan (<cite>scheduler</cite>) hinzufügen.</p>
+<blockquote>
+<div><p>Beispiel:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">optim</span><span class="o">.</span><span class="n">SGD</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">parameters</span><span class="p">(),</span> <span class="n">lr</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">learning_rate</span><span class="p">,</span> <span class="n">momentum</span><span class="o">=</span><span class="mf">0.9</span><span class="p">)</span>
+</pre></div>
+</div>
+</div></blockquote>
+</div></blockquote>
+</div></blockquote>
+</li>
+</ul>
+<p><strong>Zweites Modell zur Klassifikation der Fehlerarten (`feature_engineering_and_model_2.py`)</strong>:</p>
+<ul>
+<li><p><strong>Berechnung der Merkmale</strong>: Neben der Wölbung und Standardabweichung werden zusätzliche Merkmale wie Maximum, Varianz und Root Mean Square (RMS) berechnet. Die Funktion <cite>compute_features</cite> liefert ein erweitertes Set von Merkmalen, um eine differenzierte Analyse und Klassifikation von verschiedenen Fehlerarten zu ermöglichen.</p>
+<blockquote>
+<div><ul class="simple">
+<li><p>Um zusätzliche Merkmale wie z.B. den Spitzenwert hinzuzufügen, soll die Funktion entsprechend wie vorher bei dem ersten Modell erweitert werden.</p></li>
+</ul>
+</div></blockquote>
+</li>
+<li><p><strong>Daten vorbereiten</strong>: Die Funktion <cite>prepare_data</cite> erzeugt eine Feature-Matrix und einen Label-Vektor zur Klassifikation der Fehlerarten der Lager. Die Labels müssen spezifisch für jede Fehlerart zugewiesen werden. Dies ermöglicht die Klassifikation mehrerer Klassen, wie im folgenden Beispiel gezeigt:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">labels_FL</span> <span class="o">=</span> <span class="p">{</span>
+    <span class="s1">&#39;IR&#39;</span><span class="p">:</span> <span class="mi">0</span><span class="p">,</span>
+    <span class="s1">&#39;B&#39;</span><span class="p">:</span> <span class="mi">1</span><span class="p">,</span>
+    <span class="s1">&#39;OR3&#39;</span><span class="p">:</span> <span class="mi">2</span><span class="p">,</span>
+    <span class="s1">&#39;OR6&#39;</span><span class="p">:</span> <span class="mi">3</span><span class="p">,</span>
+    <span class="s1">&#39;OR12&#39;</span><span class="p">:</span> <span class="mi">4</span>
+<span class="p">}</span>
+<span class="n">all_data</span><span class="p">,</span> <span class="n">all_labels</span> <span class="o">=</span> <span class="n">prepare_data</span><span class="p">(</span><span class="n">features_FL_DE</span><span class="p">,</span> <span class="n">labels_FL</span><span class="p">)</span>
+</pre></div>
+</div>
+</li>
+<li><p><strong>Modell</strong>: Das zweite Modell (<cite>model_2</cite>) verwendet ein Feedforward-Neuronales Netzwerk zur Klassifikation von mehreren Klassen. Es wird <cite>CrossEntropyLoss</cite> verwendet, um die Klassifikation von verschiedenen Fehlerarten zu ermöglichen. Diese Verlustfunktion misst den Unterschied zwischen den vorhergesagten Wahrscheinlichkeiten und den tatsächlichen Klassenlabels über mehrere Klassen hinweg.</p>
+<blockquote>
+<div><ul>
+<li><p><strong>Verlustfunktion</strong>: Die Cross-Entropy Loss (CELoss) wird verwendet. Diese Verlustfunktion ist ideal für Multi-Klassen-Klassifikationsprobleme, da sie die Wahrscheinlichkeitsdifferenzen zwischen den vorhergesagten und tatsächlichen Klassenlabels über mehrere Klassen misst.</p>
+<blockquote>
+<div><div class="math notranslate nohighlight">
+\[L_{CE}(y, \hat{y}) = - \frac{1}{N} \sum_{i=1}^N \sum_{c=1}^C y_{i,c} \log(\hat{y}_{i,c})\]</div>
+</div></blockquote>
+</li>
+</ul>
+<blockquote>
+<div><p>Um die Verlustfunktion anzupassen, ändere die Methoden <cite>training_step</cite>, <cite>validation_step</cite>, und <cite>test_step</cite>, um eine neue Verlustfunktion zu verwenden.</p>
+<blockquote>
+<div><p>Beispiel:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">loss</span> <span class="o">=</span> <span class="n">nn</span><span class="o">.</span><span class="n">CrossEntropyLoss</span><span class="p">()(</span><span class="n">outputs</span><span class="p">,</span> <span class="n">labels</span><span class="p">)</span>
+</pre></div>
+</div>
+</div></blockquote>
+<p>Um den Optimierer zu ändern, passe die Methode <cite>configure_optimizers</cite> an, um verschiedene Optimierer zu verwenden, wie z.B. <cite>SGD</cite>, <cite>AdamW</cite> oder <cite>RMSprop</cite>. Weitere Parameter für die Optimierer können konfiguriert werden, oder ein neuer Lernratenplan (<cite>scheduler</cite>) kann hinzugefügt werden.</p>
+<blockquote>
+<div><p>Beispiel:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">optim</span><span class="o">.</span><span class="n">RMSprop</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">parameters</span><span class="p">(),</span> <span class="n">lr</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">learning_rate</span><span class="p">)</span>
+</pre></div>
+</div>
+</div></blockquote>
+</div></blockquote>
+</div></blockquote>
+</li>
+</ul>
+<p><strong>Konfigurierbare Parameter</strong></p>
+<blockquote>
+<div><p>Die Skripte <cite>main_modell_1.py</cite> und <cite>main_modell_2.py</cite> enthalten mehrere konfigurierbare Parameter, die die Leistung und das Verhalten des entsprechenden Modells beeinflussen (Genaue Untesuchung der Einflüsse der Parameter ist in dem nächste Kapitel dokumentiert):</p>
+<ul>
+<li><p><cite>Umlaufzeit</cite>: Zeit, die ein Wälzkörper auf der Lageraußenfläche benötigt, um eine vollständige Umdrehung zu vollziehen. Standard ist 0.033 Sekunde und wird berechnet durch <span class="math notranslate nohighlight">\(T = \frac{U}{v}\)</span> wobei:</p>
+<blockquote>
+<div><ul class="simple">
+<li><p><cite>U</cite> ist der Umfang des Lagers.</p></li>
+<li><p><cite>v</cite> ist die Umfangsgeschwindigkeit, berechnet durch: <span class="math notranslate nohighlight">\(v = \frac{π \cdot D \cdot rpm}{60}\)</span></p></li>
+<li><p><cite>D</cite> ist der Außendurchmesser des Lagers in Metern.</p></li>
+<li><p><cite>rpm</cite> ist die Drehzahl in Umdrehungen pro Minute.</p></li>
+</ul>
+</div></blockquote>
+</li>
+<li><p><cite>train_size</cite>, <cite>val_size</cite>: Die Anteile der Trainings- und Validierungsdaten.</p></li>
+<li><p><cite>batch_size</cite>: Die Größe der Batches für das Training.</p></li>
+<li><p><cite>max_epochs</cite>: Die maximale Anzahl der Trainings-Epochen.</p></li>
+<li><p><cite>learning_rate</cite>: Die Lernrate für den Optimierer.</p></li>
+<li><p><cite>hidden_sizes</cite>: Eine Liste mit den Größen und der Anzahl der versteckten Schichten im neuronalen Netzwerk.</p></li>
+</ul>
+</div></blockquote>
+</li>
+</ol>
+<p>Beispielcode:</p>
+<p>Hier ist ein kleins Beispielcode für die Ausführung der ersten Modell. Ein vollständiger Code für die beide Modelle ist in <cite>main_modell_1.py</cite> bzw. <cite>main_modell_2.py</cite> vorhanden.</p>
+<blockquote>
+<div><div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">feature_engineering_and_model_1</span> <span class="kn">import</span> <span class="n">compute_features</span>
+<span class="kn">import</span> <span class="nn">matplotlib.pyplot</span> <span class="k">as</span> <span class="nn">plt</span>
+
+<span class="c1"># Konfigurierbare Parameter</span>
+<span class="n">Umlaufzeit</span> <span class="o">=</span> <span class="mf">0.033</span>
+
+<span class="c1"># Berechnung der Merkmale des normalen Lagers DE</span>
+<span class="n">features_NL_DE</span> <span class="o">=</span> <span class="p">{</span><span class="sa">f</span><span class="s2">&quot;NL_</span><span class="si">{</span><span class="n">i</span><span class="o">+</span><span class="mi">1</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">:</span> <span class="n">compute_features</span><span class="p">(</span><span class="n">data</span><span class="p">,</span> <span class="n">Umlaufzeit</span><span class="p">)</span> <span class="k">for</span> <span class="n">i</span><span class="p">,</span> <span class="n">data</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">extracted_NL_data</span><span class="p">[</span><span class="s1">&#39;DE_time&#39;</span><span class="p">])</span> <span class="k">if</span> <span class="n">data</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">}</span>
+<span class="c1"># Berechnung der Merkmale des normalen Lagers FE</span>
+<span class="n">features_NL_FE</span> <span class="o">=</span> <span class="p">{</span><span class="sa">f</span><span class="s2">&quot;NL_</span><span class="si">{</span><span class="n">i</span><span class="o">+</span><span class="mi">1</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">:</span> <span class="n">compute_features</span><span class="p">(</span><span class="n">data</span><span class="p">,</span> <span class="n">Umlaufzeit</span><span class="p">)</span> <span class="k">for</span> <span class="n">i</span><span class="p">,</span> <span class="n">data</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">extracted_NL_data</span><span class="p">[</span><span class="s1">&#39;FE_time&#39;</span><span class="p">])</span> <span class="k">if</span> <span class="n">data</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">}</span>
+<span class="c1"># Berechnung der Merkmale des fehlerhaften Lagers DE</span>
+<span class="n">features_FL_DE</span> <span class="o">=</span> <span class="p">{</span><span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">key</span><span class="si">}</span><span class="s2">_</span><span class="si">{</span><span class="n">i</span><span class="o">+</span><span class="mi">1</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">:</span> <span class="n">compute_features</span><span class="p">(</span><span class="n">data</span><span class="p">,</span> <span class="n">Umlaufzeit</span><span class="p">)</span> <span class="k">for</span> <span class="n">key</span><span class="p">,</span> <span class="n">dataset</span> <span class="ow">in</span> <span class="n">extracted_FL_data</span><span class="o">.</span><span class="n">items</span><span class="p">()</span> <span class="k">for</span> <span class="n">i</span><span class="p">,</span> <span class="n">data</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">dataset</span><span class="p">[</span><span class="s1">&#39;DE_time&#39;</span><span class="p">])</span> <span class="k">if</span> <span class="n">data</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">}</span>
+<span class="c1"># Berechnung der Merkmale des fehlerhaften Lagers FE</span>
+<span class="n">features_FL_FE</span> <span class="o">=</span> <span class="p">{</span><span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">key</span><span class="si">}</span><span class="s2">_</span><span class="si">{</span><span class="n">i</span><span class="o">+</span><span class="mi">1</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">:</span> <span class="n">compute_features</span><span class="p">(</span><span class="n">data</span><span class="p">,</span> <span class="n">Umlaufzeit</span><span class="p">)</span> <span class="k">for</span> <span class="n">key</span><span class="p">,</span> <span class="n">dataset</span> <span class="ow">in</span> <span class="n">extracted_FL_data</span><span class="o">.</span><span class="n">items</span><span class="p">()</span> <span class="k">for</span> <span class="n">i</span><span class="p">,</span> <span class="n">data</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">dataset</span><span class="p">[</span><span class="s1">&#39;FE_time&#39;</span><span class="p">])</span> <span class="k">if</span> <span class="n">data</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">}</span>
+
+<span class="c1"># Beispielplot der Merkmale</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">figure</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">10</span><span class="p">,</span> <span class="mi">6</span><span class="p">))</span>
+<span class="c1"># Plotting normal Lager DE Merkmale</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">features_NL_DE</span><span class="p">[</span><span class="s2">&quot;NL_2&quot;</span><span class="p">][</span><span class="mi">0</span><span class="p">][:</span><span class="mi">400</span><span class="p">],</span> <span class="s2">&quot;*&quot;</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s1">&#39;Normale Lager DE Wölbung&#39;</span><span class="p">)</span>
+
+<span class="c1"># Plotting fehlerhafte Lager DE Merkmale</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">features_FL_DE</span><span class="p">[</span><span class="s2">&quot;IR_1&quot;</span><span class="p">][</span><span class="mi">0</span><span class="p">],</span> <span class="s2">&quot;^&quot;</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s1">&#39;Fehlerhafte Lager IR DE Wölbung&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">features_FL_DE</span><span class="p">[</span><span class="s2">&quot;B_1&quot;</span><span class="p">][</span><span class="mi">0</span><span class="p">],</span> <span class="s2">&quot;^&quot;</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s1">&#39;Fehlerhafte Lager B DE Wölbung&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">features_FL_DE</span><span class="p">[</span><span class="s2">&quot;OR3_1&quot;</span><span class="p">][</span><span class="mi">0</span><span class="p">],</span> <span class="s2">&quot;^&quot;</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s1">&#39;Fehlerhafte Lager OR3 DE Wölbung&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">features_FL_DE</span><span class="p">[</span><span class="s2">&quot;OR6_1&quot;</span><span class="p">][</span><span class="mi">0</span><span class="p">],</span> <span class="s2">&quot;^&quot;</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s1">&#39;Fehlerhafte Lager OR6 DE Wölbung&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">features_FL_DE</span><span class="p">[</span><span class="s2">&quot;OR12_1&quot;</span><span class="p">][</span><span class="mi">0</span><span class="p">],</span> <span class="s2">&quot;^&quot;</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s1">&#39;Fehlerhafte Lager OR12 DE Wölbung&#39;</span><span class="p">)</span>
+
+<span class="n">plt</span><span class="o">.</span><span class="n">xlabel</span><span class="p">(</span><span class="s1">&#39;Datenpunkt&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">ylabel</span><span class="p">(</span><span class="s1">&#39;Merkmale&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">legend</span><span class="p">()</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">grid</span><span class="p">(</span><span class="kc">True</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+</pre></div>
+</div>
+</div></blockquote>
+<p>Das unten resultierende Diagramm zeigt das Merkmal (Wölbung) über den Datenpunkten. Das Merkmal wird von fehlerhaften Lagern in unterschiedlichen Zuständen und einem normalen Lager dargestellt.</p>
+<figure class="align-center" id="id4">
+<img alt="" src="_images/Figure3.png" />
+<figcaption>
+<p><span class="caption-text">Abbildung (3): Merkmal (Wölbung) über den Datenpunkten in verschiedenen Zuständen.</span><a class="headerlink" href="#id4" title="Link to this image"></a></p>
+</figcaption>
+</figure>
+<p>-<strong>Merkmale zusammenführen und Modell tranieren, validieren und testen:</strong></p>
+<blockquote>
+<div><div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">feature_engineering_and_model_1</span> <span class="kn">import</span> <span class="n">prepare_data</span><span class="p">,</span> <span class="n">model_1</span><span class="p">,</span> <span class="n">test_model</span>
+<span class="kn">import</span> <span class="nn">torch</span>
+<span class="kn">from</span> <span class="nn">torch.utils.data</span> <span class="kn">import</span> <span class="n">DataLoader</span><span class="p">,</span> <span class="n">TensorDataset</span><span class="p">,</span> <span class="n">random_split</span>
+<span class="kn">import</span> <span class="nn">pytorch_lightning</span> <span class="k">as</span> <span class="nn">pl</span>
+
+<span class="c1"># Konfigurierbare Parameter</span>
+<span class="n">train_size</span><span class="p">,</span> <span class="n">val_size</span> <span class="o">=</span> <span class="mf">0.6</span><span class="p">,</span> <span class="mf">0.2</span>
+<span class="n">batch_size</span> <span class="o">=</span> <span class="mi">230</span>
+<span class="n">max_epochs</span> <span class="o">=</span> <span class="mi">50</span>
+<span class="n">learning_rate</span> <span class="o">=</span> <span class="mf">0.01</span>
+<span class="n">hidden_sizes</span> <span class="o">=</span> <span class="p">[</span><span class="mi">50</span><span class="p">,</span> <span class="mi">25</span><span class="p">]</span>
+
+<span class="c1"># Merkmale zusammenführen und Tensoren erstellen</span>
+<span class="n">all_data_DE</span><span class="p">,</span> <span class="n">all_labels_DE</span> <span class="o">=</span> <span class="n">prepare_data</span><span class="p">(</span><span class="n">features_NL_DE</span><span class="p">,</span> <span class="n">features_FL_DE</span><span class="p">)</span>
+<span class="n">data_tensor_DE</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">tensor</span><span class="p">(</span><span class="n">all_data_DE</span><span class="p">[:,</span> <span class="p">:,</span> <span class="mi">0</span><span class="p">],</span> <span class="n">dtype</span><span class="o">=</span><span class="n">torch</span><span class="o">.</span><span class="n">float32</span><span class="p">)</span>
+<span class="n">labels_tensor_DE</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">tensor</span><span class="p">(</span><span class="n">all_labels_DE</span><span class="p">,</span> <span class="n">dtype</span><span class="o">=</span><span class="n">torch</span><span class="o">.</span><span class="n">float32</span><span class="p">)</span>
+
+<span class="c1"># Dataset erstellen</span>
+<span class="n">dataset_DE</span> <span class="o">=</span> <span class="n">TensorDataset</span><span class="p">(</span><span class="n">data_tensor_DE</span><span class="p">,</span> <span class="n">labels_tensor_DE</span><span class="p">)</span>
+
+<span class="c1"># Aufteilen in Trainings-, Validierungs- und Testdatensätze</span>
+<span class="n">train_size_DE</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">train_size</span> <span class="o">*</span> <span class="nb">len</span><span class="p">(</span><span class="n">dataset_DE</span><span class="p">))</span>
+<span class="n">val_size_DE</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">val_size</span> <span class="o">*</span> <span class="nb">len</span><span class="p">(</span><span class="n">dataset_DE</span><span class="p">))</span>
+<span class="n">test_size_DE</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">dataset_DE</span><span class="p">)</span> <span class="o">-</span> <span class="n">train_size_DE</span> <span class="o">-</span> <span class="n">val_size_DE</span>
+<span class="n">train_dataset_DE</span><span class="p">,</span> <span class="n">val_dataset_DE</span><span class="p">,</span> <span class="n">test_dataset_DE</span> <span class="o">=</span> <span class="n">random_split</span><span class="p">(</span><span class="n">dataset_DE</span><span class="p">,</span> <span class="p">[</span><span class="n">train_size_DE</span><span class="p">,</span> <span class="n">val_size_DE</span><span class="p">,</span> <span class="n">test_size_DE</span><span class="p">])</span>
+
+<span class="c1"># DataLoader erstellen</span>
+<span class="n">batch_size_DE</span> <span class="o">=</span> <span class="n">test_size_DE</span>
+<span class="n">train_loader_DE</span> <span class="o">=</span> <span class="n">DataLoader</span><span class="p">(</span><span class="n">train_dataset_DE</span><span class="p">,</span> <span class="n">batch_size</span><span class="p">,</span> <span class="n">shuffle</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+<span class="n">val_loader_DE</span> <span class="o">=</span> <span class="n">DataLoader</span><span class="p">(</span><span class="n">val_dataset_DE</span><span class="p">,</span> <span class="n">batch_size</span><span class="p">)</span>
+<span class="n">test_loader_DE</span> <span class="o">=</span> <span class="n">DataLoader</span><span class="p">(</span><span class="n">test_dataset_DE</span><span class="p">,</span> <span class="n">batch_size_DE</span><span class="p">)</span>
+
+<span class="c1"># Hyperparameter definieren</span>
+<span class="n">input_size</span> <span class="o">=</span> <span class="n">all_data_DE</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span>
+<span class="n">output_size</span> <span class="o">=</span> <span class="mi">1</span>
+
+<span class="c1"># Modell instanziieren</span>
+<span class="n">model</span> <span class="o">=</span> <span class="n">model_1</span><span class="p">(</span><span class="n">input_size</span><span class="p">,</span> <span class="n">hidden_sizes</span><span class="p">,</span> <span class="n">output_size</span><span class="p">,</span> <span class="n">learning_rate</span><span class="p">)</span>
+
+<span class="c1"># Training des Modells</span>
+<span class="n">trainer</span> <span class="o">=</span> <span class="n">pl</span><span class="o">.</span><span class="n">Trainer</span><span class="p">(</span><span class="n">max_epochs</span> <span class="o">=</span> <span class="n">max_epochs</span><span class="p">)</span>
+<span class="n">trainer</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span><span class="n">model</span><span class="p">,</span> <span class="n">train_loader_DE</span><span class="p">,</span> <span class="n">val_loader_DE</span><span class="p">)</span>
+
+<span class="c1"># Testen des Modells</span>
+<span class="n">test_model</span><span class="p">(</span><span class="n">model</span><span class="p">,</span> <span class="n">test_loader_DE</span><span class="p">,</span> <span class="s2">&quot;Test_DE&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div></blockquote>
+<p>Mit diesem Beispiel wird am Ende das Modell trainiert, validiert und getestet und mit dem Test_DE
+Genauigkeit = <span class="math notranslate nohighlight">\(\frac{\text{Gesamtanzahl der Vorhersagen}}{\text{Anzahl der korrekten Vorhersagen}} \approx 0,985\)</span>
+erreicht. Das unten resultierende Diagramm zeigt die ersten 100 aus 5457 getesteten Punkten als grafische Darstellung.</p>
+<figure class="align-center" id="id5">
+<img alt="" src="_images/Figure4.png" />
+<figcaption>
+<p><span class="caption-text">Abbildung (4): Visualisierung der Testung.</span><a class="headerlink" href="#id5" title="Link to this image"></a></p>
+</figcaption>
+</figure>
+</section>
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="Verwendung.html" class="btn btn-neutral float-left" title="Verwendung" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Zurück</a>
+        <a href="Ergebnisse.html" class="btn btn-neutral float-right" title="Ergebnisse, Zusammenfassung und Schlussfolgerung" accesskey="n" rel="next">Weiter <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2024, Mohammad Alolabi.</p>
+  </div>
+
+  Erstellt mit <a href="https://www.sphinx-doc.org/">Sphinx</a> mit einem
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    bereitgestellt von <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>
