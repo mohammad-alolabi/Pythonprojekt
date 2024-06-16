@@ -138,7 +138,10 @@ gefunden wird, gibt die Funktion eine entsprechende Fehlermeldung aus.</p>
 Falls ein Fehler beim Herunterladen einer Datei kommt, wird es nochmal nach der Anzahl der
 Wiederholungsversuche ‚retries‘ versucht, die Datei herunterzuladen. Nach dem Erreichen maximale
 Anzahl an Versuchen wird angezeigt, dass die Datei nicht heruntergeladen werden kann. Danach wird versucht,
-die nächste Datei herunterzuladen.</p>
+die nächste Datei herunterzuladen. In diesem Fall ist empfohlen, nach Beendigung des Downloadprozesses den
+Prozess nochmal zu wiederholen. Der Vorteil hier ist, dass die Funktion so effizient ist, dass am Anfang geprüft wird, ob die Datei bereits vorhanden
+ist oder nicht. Falls ja, wird sie nicht wieder heruntergeladen und es wird angezeigt, dass die Datei bereits vorhanden
+ist; falls nein, wird sie dann heruntergeladen.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameter<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">

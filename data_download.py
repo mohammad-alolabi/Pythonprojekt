@@ -23,7 +23,10 @@ def download_file(url, folder, retries=5):
     Falls ein Fehler beim Herunterladen einer Datei kommt, wird es nochmal nach der Anzahl der 
     Wiederholungsversuche 'retries' versucht, die Datei herunterzuladen. Nach dem Erreichen maximale 
     Anzahl an Versuchen wird angezeigt, dass die Datei nicht heruntergeladen werden kann. Danach wird versucht, 
-    die nächste Datei herunterzuladen.
+    die nächste Datei herunterzuladen. In diesem Fall ist empfohlen, nach Beendigung des Downloadprozesses den 
+    Prozess nochmal zu wiederholen. Der Vorteil hier ist, dass die Funktion so effizient ist, dass am Anfang geprüft wird, ob die Datei bereits vorhanden
+    ist oder nicht. Falls ja, wird sie nicht wieder heruntergeladen und es wird angezeigt, dass die Datei bereits vorhanden
+    ist; falls nein, wird sie dann heruntergeladen.
 
     Args:
         url (str): Die URL der Datei, die heruntergeladen werden soll.
