@@ -148,9 +148,17 @@ Es werden die Vibrationen von fehlerhaften Lagern in unterschiedlichen Zustände
 
    - **Modell**: Das Feedforward-Neuronale Netzwerk (`model_1`) wird verwendet, um die Klassifikation durchzuführen. Der Optimierer und die Verlustfunktion können angepasst werden, um die Trainingseffizienz zu verbessern.
 
-        - **Verlustfunktion**: Die Binary Cross-Entropy Loss (BCELoss) wird verwendet. Sie ist ideal für binäre Klassifikationsprobleme, da sie den Unterschied zwischen den vorhergesagten Wahrscheinlichkeiten und den tatsächlichen Binärlabels misst. Der Verlustwert wird als Mittelwert der negativen logarithmischen Differenz zwischen den tatsächlichen Labels und den vorhergesagten Wahrscheinlichkeiten berechnet. 
+         - **Verlustfunktion**: Die Binary Cross-Entropy Loss (BCELoss) wird verwendet. Diese Verlustfunktion ist ideal für binäre Klassifikationsprobleme, da sie den Unterschied zwischen den vorhergesagten Wahrscheinlichkeiten und den tatsächlichen Binärlabels misst. Der Verlustwert wird als Mittelwert der negativen logarithmischen Differenz zwischen den tatsächlichen Labels und den vorhergesagten Wahrscheinlichkeiten berechnet.
 
-            .. math:: L_{BCE}(y, \hat{y}) = - \frac{1}{N} \sum_{i=1}^N \left[y_i \log(\hat{y}_i) + (1 - y_i) \log(1 - \hat{y}_i)\right]
+         .. math::
+
+              L_{BCE}(y, \hat{y}) = - \frac{1}{N} \sum_{i=1}^{N} \left[ y_i \log(\hat{y}_i) + (1 - y_i) \log(1 - \hat{y}_i) \right]
+
+         Hierbei sind:
+
+            - :math:`N`: Die Anzahl der Datenpunkte.
+            - :math:`y_i`: Das tatsächliche Label für die :math:`i`-te Datenpunkte.
+            - :math:`\hat{y}_i`: Die vorhergesagte Wahrscheinlichkeit für die :math:`i`-te Datenpunkte.
 
          Um die Verlustfunktion zu ändern, aktualisiere die Methoden `training_step`, `validation_step`, und `test_step`, um eine neue Verlustfunktion zu verwenden. Beispielsweise könnte `BCELoss` durch `CrossEntropyLoss` oder eine benutzerdefinierte Verlustfunktion ersetzt werden.
     
@@ -160,7 +168,7 @@ Es werden die Vibrationen von fehlerhaften Lagern in unterschiedlichen Zustände
             
                  loss = nn.CrossEntropyLoss()(outputs, labels.long())
             
-         Um den Optimierer zu ändern, aktualisiere die Methode `configure_optimizers`, um einen anderen Optimierer zu verwenden, wie z.B. `SGD`, `AdamW` oder `RMSprop`. Du kannst zusätzliche Parameter für die Optimierer einstellen oder einen neuen Lernratenplan (`scheduler`) hinzufügen.
+         Um den Optimierer zu ändern, aktualisiere die Methode `configure_optimizers`, um einen anderen Optimierer zu verwenden, wie z.B. `SGD`, `Adam` oder `RMSprop`. Du kannst zusätzliche Parameter für die Optimierer einstellen oder einen neuen Lernratenplan (`scheduler`) hinzufügen.
 
             Beispiel:
 
@@ -190,9 +198,18 @@ Es werden die Vibrationen von fehlerhaften Lagern in unterschiedlichen Zustände
 
    - **Modell**: Das zweite Modell (`model_2`) verwendet ein Feedforward-Neuronales Netzwerk zur Klassifikation von mehreren Klassen. Es wird `CrossEntropyLoss` verwendet, um die Klassifikation von verschiedenen Fehlerarten zu ermöglichen. Diese Verlustfunktion misst den Unterschied zwischen den vorhergesagten Wahrscheinlichkeiten und den tatsächlichen Klassenlabels über mehrere Klassen hinweg.
 
-        - **Verlustfunktion**: Die Cross-Entropy Loss (CELoss) wird verwendet. Diese Verlustfunktion ist ideal für Multi-Klassen-Klassifikationsprobleme, da sie die Wahrscheinlichkeitsdifferenzen zwischen den vorhergesagten und tatsächlichen Klassenlabels über mehrere Klassen misst. 
+        - **Verlustfunktion**: Die Cross-Entropy Loss (CELoss) wird verwendet. Diese Verlustfunktion ist ideal für Multi-Klassen-Klassifikationsprobleme, da sie die Wahrscheinlichkeitsdifferenzen zwischen den vorhergesagten und tatsächlichen Klassenlabels über mehrere Klassen misst.
 
-            .. math:: L_{CE}(y, \hat{y}) = - \frac{1}{N} \sum_{i=1}^N \sum_{c=1}^C y_{i,c} \log(\hat{y}_{i,c})
+        .. math::
+
+             L_{CE}(y, \hat{y}) = - \frac{1}{N} \sum_{i=1}^{N} \sum_{c=1}^{C} y_{i,c} \log(\hat{y}_{i,c})
+
+        Hierbei sind:
+
+            - :math:`N`: Die Anzahl der Datenpunkte.
+            - :math:`C`: Die Anzahl der Klassen.
+            - :math:`y_{i,c}`: Das tatsächliche Label für die :math:`i`-te Datenpunkte und die Klasse :math:`c`.
+            - :math:`\hat{y}_{i,c}`: Die vorhergesagte Wahrscheinlichkeit für die :math:`i`-te Datenpunkte und die Klasse :math:`c`.
 
          Um die Verlustfunktion anzupassen, ändere die Methoden `training_step`, `validation_step`, und `test_step`, um eine neue Verlustfunktion zu verwenden. 
 
@@ -325,9 +342,27 @@ Das unten resultierende Diagramm zeigt das Merkmal (Wölbung) über den Datenpun
      # Testen des Modells 
      test_model(model, test_loader_DE, "Test_DE") 
 
-Mit diesem Beispiel wird am Ende das Modell trainiert, validiert und getestet und mit dem Test_DE 
-Genauigkeit = :math:`\frac{\text{Gesamtanzahl der Vorhersagen}}{\text{Anzahl der korrekten Vorhersagen}} \approx 0,985`
-erreicht. Das unten resultierende Diagramm zeigt die ersten 100 aus 5457 getesteten Punkten als grafische Darstellung.
+Mit diesem Beispiel wird am Ende das Modell trainiert, validiert und getestet. Mit dem `Test_DE`
+wird eine Genauigkeit erreicht von:
+
+.. math::
+
+    \text{Genauigkeit} = \frac{\text{Anzahl der korrekten Vorhersagen}}{\text{Gesamtanzahl der Vorhersagen}} \approx 0,985
+
+Dies wird formelhaft wie folgt berechnet:
+
+.. math::
+
+    \text{Genauigkeit} = \frac{1}{N} \sum_{i=1}^{N} \mathbf{1}\{ \hat{y}_i = y_i \}
+
+wobei:
+
+- :math:`N` die Gesamtzahl der Vorhersagen ist.
+- :math:`\hat{y}_i` die vorhergesagte Klasse für das :math:`i`-te Beispiel ist.
+- :math:`y_i` die tatsächliche Klasse für die :math:`i`-te Datenpunkte ist.
+- :math:`\mathbf{1}\{ \hat{y}_i = y_i \}` eine Indikatorfunktion ist, die :math:`1` ist, wenn :math:`\hat{y}_i` gleich :math:`y_i` ist, und :math:`0` ansonsten.
+
+Das unten resultierende Diagramm zeigt die ersten 100 aus 5457 getesteten Punkten als grafische Darstellung.
 
 .. figure:: /_static/Figure4.png
    :alt:

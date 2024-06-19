@@ -222,29 +222,32 @@ Es werden die Vibrationen von fehlerhaften Lagern in unterschiedlichen Zustände
 <li><p><strong>Daten vorbereiten</strong>: Die Funktion <cite>prepare_data</cite> kombiniert die berechneten Merkmale und erstellt die zugehörigen Labels. Diese Funktion erzeugt eine Feature-Matrix und einen Label-Vektor zur Klassifikation zwischen normalen und fehlerhaften Lagern.</p></li>
 <li><p><strong>Modell</strong>: Das Feedforward-Neuronale Netzwerk (<cite>model_1</cite>) wird verwendet, um die Klassifikation durchzuführen. Der Optimierer und die Verlustfunktion können angepasst werden, um die Trainingseffizienz zu verbessern.</p>
 <blockquote>
-<div><ul>
-<li><p><strong>Verlustfunktion</strong>: Die Binary Cross-Entropy Loss (BCELoss) wird verwendet. Sie ist ideal für binäre Klassifikationsprobleme, da sie den Unterschied zwischen den vorhergesagten Wahrscheinlichkeiten und den tatsächlichen Binärlabels misst. Der Verlustwert wird als Mittelwert der negativen logarithmischen Differenz zwischen den tatsächlichen Labels und den vorhergesagten Wahrscheinlichkeiten berechnet.</p>
-<blockquote>
-<div><div class="math notranslate nohighlight">
-\[L_{BCE}(y, \hat{y}) = - \frac{1}{N} \sum_{i=1}^N \left[y_i \log(\hat{y}_i) + (1 - y_i) \log(1 - \hat{y}_i)\right]\]</div>
-</div></blockquote>
-</li>
+<div><ul class="simple">
+<li><p><strong>Verlustfunktion</strong>: Die Binary Cross-Entropy Loss (BCELoss) wird verwendet. Diese Verlustfunktion ist ideal für binäre Klassifikationsprobleme, da sie den Unterschied zwischen den vorhergesagten Wahrscheinlichkeiten und den tatsächlichen Binärlabels misst. Der Verlustwert wird als Mittelwert der negativen logarithmischen Differenz zwischen den tatsächlichen Labels und den vorhergesagten Wahrscheinlichkeiten berechnet.</p></li>
 </ul>
+<div class="math notranslate nohighlight">
+\[L_{BCE}(y, \hat{y}) = - \frac{1}{N} \sum_{i=1}^{N} \left[ y_i \log(\hat{y}_i) + (1 - y_i) \log(1 - \hat{y}_i) \right]\]</div>
+<p>Hierbei sind:</p>
 <blockquote>
-<div><p>Um die Verlustfunktion zu ändern, aktualisiere die Methoden <cite>training_step</cite>, <cite>validation_step</cite>, und <cite>test_step</cite>, um eine neue Verlustfunktion zu verwenden. Beispielsweise könnte <cite>BCELoss</cite> durch <cite>CrossEntropyLoss</cite> oder eine benutzerdefinierte Verlustfunktion ersetzt werden.</p>
+<div><ul class="simple">
+<li><p><span class="math notranslate nohighlight">\(N\)</span>: Die Anzahl der Datenpunkte.</p></li>
+<li><p><span class="math notranslate nohighlight">\(y_i\)</span>: Das tatsächliche Label für die <span class="math notranslate nohighlight">\(i\)</span>-te Datenpunkte.</p></li>
+<li><p><span class="math notranslate nohighlight">\(\hat{y}_i\)</span>: Die vorhergesagte Wahrscheinlichkeit für die <span class="math notranslate nohighlight">\(i\)</span>-te Datenpunkte.</p></li>
+</ul>
+</div></blockquote>
+<p>Um die Verlustfunktion zu ändern, aktualisiere die Methoden <cite>training_step</cite>, <cite>validation_step</cite>, und <cite>test_step</cite>, um eine neue Verlustfunktion zu verwenden. Beispielsweise könnte <cite>BCELoss</cite> durch <cite>CrossEntropyLoss</cite> oder eine benutzerdefinierte Verlustfunktion ersetzt werden.</p>
 <blockquote>
 <div><p>Beispiel:</p>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">loss</span> <span class="o">=</span> <span class="n">nn</span><span class="o">.</span><span class="n">CrossEntropyLoss</span><span class="p">()(</span><span class="n">outputs</span><span class="p">,</span> <span class="n">labels</span><span class="o">.</span><span class="n">long</span><span class="p">())</span>
 </pre></div>
 </div>
 </div></blockquote>
-<p>Um den Optimierer zu ändern, aktualisiere die Methode <cite>configure_optimizers</cite>, um einen anderen Optimierer zu verwenden, wie z.B. <cite>SGD</cite>, <cite>AdamW</cite> oder <cite>RMSprop</cite>. Du kannst zusätzliche Parameter für die Optimierer einstellen oder einen neuen Lernratenplan (<cite>scheduler</cite>) hinzufügen.</p>
+<p>Um den Optimierer zu ändern, aktualisiere die Methode <cite>configure_optimizers</cite>, um einen anderen Optimierer zu verwenden, wie z.B. <cite>SGD</cite>, <cite>Adam</cite> oder <cite>RMSprop</cite>. Du kannst zusätzliche Parameter für die Optimierer einstellen oder einen neuen Lernratenplan (<cite>scheduler</cite>) hinzufügen.</p>
 <blockquote>
 <div><p>Beispiel:</p>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">optim</span><span class="o">.</span><span class="n">SGD</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">parameters</span><span class="p">(),</span> <span class="n">lr</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">learning_rate</span><span class="p">,</span> <span class="n">momentum</span><span class="o">=</span><span class="mf">0.9</span><span class="p">)</span>
 </pre></div>
 </div>
-</div></blockquote>
 </div></blockquote>
 </div></blockquote>
 </li>
@@ -272,16 +275,22 @@ Es werden die Vibrationen von fehlerhaften Lagern in unterschiedlichen Zustände
 </li>
 <li><p><strong>Modell</strong>: Das zweite Modell (<cite>model_2</cite>) verwendet ein Feedforward-Neuronales Netzwerk zur Klassifikation von mehreren Klassen. Es wird <cite>CrossEntropyLoss</cite> verwendet, um die Klassifikation von verschiedenen Fehlerarten zu ermöglichen. Diese Verlustfunktion misst den Unterschied zwischen den vorhergesagten Wahrscheinlichkeiten und den tatsächlichen Klassenlabels über mehrere Klassen hinweg.</p>
 <blockquote>
-<div><ul>
-<li><p><strong>Verlustfunktion</strong>: Die Cross-Entropy Loss (CELoss) wird verwendet. Diese Verlustfunktion ist ideal für Multi-Klassen-Klassifikationsprobleme, da sie die Wahrscheinlichkeitsdifferenzen zwischen den vorhergesagten und tatsächlichen Klassenlabels über mehrere Klassen misst.</p>
-<blockquote>
-<div><div class="math notranslate nohighlight">
-\[L_{CE}(y, \hat{y}) = - \frac{1}{N} \sum_{i=1}^N \sum_{c=1}^C y_{i,c} \log(\hat{y}_{i,c})\]</div>
-</div></blockquote>
-</li>
+<div><ul class="simple">
+<li><p><strong>Verlustfunktion</strong>: Die Cross-Entropy Loss (CELoss) wird verwendet. Diese Verlustfunktion ist ideal für Multi-Klassen-Klassifikationsprobleme, da sie die Wahrscheinlichkeitsdifferenzen zwischen den vorhergesagten und tatsächlichen Klassenlabels über mehrere Klassen misst.</p></li>
 </ul>
+<div class="math notranslate nohighlight">
+\[L_{CE}(y, \hat{y}) = - \frac{1}{N} \sum_{i=1}^{N} \sum_{c=1}^{C} y_{i,c} \log(\hat{y}_{i,c})\]</div>
+<p>Hierbei sind:</p>
 <blockquote>
-<div><p>Um die Verlustfunktion anzupassen, ändere die Methoden <cite>training_step</cite>, <cite>validation_step</cite>, und <cite>test_step</cite>, um eine neue Verlustfunktion zu verwenden.</p>
+<div><blockquote>
+<div><ul class="simple">
+<li><p><span class="math notranslate nohighlight">\(N\)</span>: Die Anzahl der Datenpunkte.</p></li>
+<li><p><span class="math notranslate nohighlight">\(C\)</span>: Die Anzahl der Klassen.</p></li>
+<li><p><span class="math notranslate nohighlight">\(y_{i,c}\)</span>: Das tatsächliche Label für die <span class="math notranslate nohighlight">\(i\)</span>-te Datenpunkte und die Klasse <span class="math notranslate nohighlight">\(c\)</span>.</p></li>
+<li><p><span class="math notranslate nohighlight">\(\hat{y}_{i,c}\)</span>: Die vorhergesagte Wahrscheinlichkeit für die <span class="math notranslate nohighlight">\(i\)</span>-te Datenpunkte und die Klasse <span class="math notranslate nohighlight">\(c\)</span>.</p></li>
+</ul>
+</div></blockquote>
+<p>Um die Verlustfunktion anzupassen, ändere die Methoden <cite>training_step</cite>, <cite>validation_step</cite>, und <cite>test_step</cite>, um eine neue Verlustfunktion zu verwenden.</p>
 <blockquote>
 <div><p>Beispiel:</p>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">loss</span> <span class="o">=</span> <span class="n">nn</span><span class="o">.</span><span class="n">CrossEntropyLoss</span><span class="p">()(</span><span class="n">outputs</span><span class="p">,</span> <span class="n">labels</span><span class="p">)</span>
@@ -417,9 +426,21 @@ Es werden die Vibrationen von fehlerhaften Lagern in unterschiedlichen Zustände
 </pre></div>
 </div>
 </div></blockquote>
-<p>Mit diesem Beispiel wird am Ende das Modell trainiert, validiert und getestet und mit dem Test_DE
-Genauigkeit = <span class="math notranslate nohighlight">\(\frac{\text{Gesamtanzahl der Vorhersagen}}{\text{Anzahl der korrekten Vorhersagen}} \approx 0,985\)</span>
-erreicht. Das unten resultierende Diagramm zeigt die ersten 100 aus 5457 getesteten Punkten als grafische Darstellung.</p>
+<p>Mit diesem Beispiel wird am Ende das Modell trainiert, validiert und getestet. Mit dem <cite>Test_DE</cite>
+wird eine Genauigkeit erreicht von:</p>
+<div class="math notranslate nohighlight">
+\[\text{Genauigkeit} = \frac{\text{Anzahl der korrekten Vorhersagen}}{\text{Gesamtanzahl der Vorhersagen}} \approx 0,985\]</div>
+<p>Dies wird formelhaft wie folgt berechnet:</p>
+<div class="math notranslate nohighlight">
+\[\text{Genauigkeit} = \frac{1}{N} \sum_{i=1}^{N} \mathbf{1}\{ \hat{y}_i = y_i \}\]</div>
+<p>wobei:</p>
+<ul class="simple">
+<li><p><span class="math notranslate nohighlight">\(N\)</span> die Gesamtzahl der Vorhersagen ist.</p></li>
+<li><p><span class="math notranslate nohighlight">\(\hat{y}_i\)</span> die vorhergesagte Klasse für das <span class="math notranslate nohighlight">\(i\)</span>-te Beispiel ist.</p></li>
+<li><p><span class="math notranslate nohighlight">\(y_i\)</span> die tatsächliche Klasse für die <span class="math notranslate nohighlight">\(i\)</span>-te Datenpunkte ist.</p></li>
+<li><p><span class="math notranslate nohighlight">\(\mathbf{1}\{ \hat{y}_i = y_i \}\)</span> eine Indikatorfunktion ist, die <span class="math notranslate nohighlight">\(1\)</span> ist, wenn <span class="math notranslate nohighlight">\(\hat{y}_i\)</span> gleich <span class="math notranslate nohighlight">\(y_i\)</span> ist, und <span class="math notranslate nohighlight">\(0\)</span> ansonsten.</p></li>
+</ul>
+<p>Das unten resultierende Diagramm zeigt die ersten 100 aus 5457 getesteten Punkten als grafische Darstellung.</p>
 <figure class="align-center" id="id3">
 <img alt="" src="_images/Figure4.png" />
 <figcaption>

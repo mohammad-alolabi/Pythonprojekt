@@ -16,8 +16,7 @@ erste Modell zur Klissifikastion der normalen und fehlerarten Lager mit den folg
      learning_rate = 0.01
      hidden_sizes = [50, 25]  
 
-
-**Ergebnisse**
+Ergebnisse
 ----------------------
 
 Nach der Ausführung des Skriptes werden die berechneten Merkmale Wölbung und Standardabweichung grafisch 
@@ -197,7 +196,7 @@ wobei die Labels sind wie folgt:
    Abbildung (10): Vorhersagen des Modells gegenüber den tatsächlichen Labels.
 
 
-**Zusammenfassung**
+Zusammenfassung
 ----------------------
 
 Die Experimente zeigen, dass die Wahl der Merkmale und Hyperparameter entscheidend für die 
@@ -210,7 +209,7 @@ Genauigkeit bei der Klsifizierung der Fehlerarten aufrechtzuerhalten, wenn es mi
 Sensors getestet wird. Insgesamt betont diese Arbeit die Bedeutung der Feinabstimmung der 
 Netzwerkkonfigurationen und Hyperparameter für optimale Ergebnisse.
 
-**Schlussfolgerung**
+Schlussfolgerung
 ----------------------
 
 Diese Untersuchungen zeigen, dass eine sorgfältige Auswahl und Anpassung von Merkmalen und Hyperparametern 
