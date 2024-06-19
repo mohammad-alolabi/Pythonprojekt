@@ -74,10 +74,6 @@ def compute_features(data, interval_length):
 def prepare_data(features_dict, labels_dict):
     """
     Führt die Merkmale und die zugehörigen Labels zusammen.
-
-    Diese Funktion kombiniert die berechneten Merkmale und erstellt die zugehörigen Labels 
-    für die spätere Modellierung. Die Labels werden in dem Skript definiert.
-
     Args:
         features_dict (dict): Dictionary der Merkmale, wobei die Schlüssel die Lagerarten repräsentieren.
         labels_dict (dict): Dictionary der Labels, wobei die Schlüssel die Lagerarten repräsentieren.
@@ -111,6 +107,10 @@ class model_2(pl.LightningModule):
     von Merkmalen, um verschiedene Arten von Lagerfehlern zu erkennen. Sie verwendet PyTorch Lightning
     für das Training und die Evaluierung. Für Mehrklassenklassifikation wird eine Softmax-Funktion in der 
     Ausgangsschicht verwendet.
+
+
+    Diese Funktion kombiniert die berechneten Merkmale und erstellt die zugehörigen Labels 
+    für die spätere Modellierung. Die Labels werden in dem Skript definiert.
 
     Args:
         input_size (int): Die Größe des Eingangsvektors. Typischerweise genau die Anzahl der Merkmale.

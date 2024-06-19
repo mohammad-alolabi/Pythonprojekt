@@ -46,74 +46,77 @@ features_FL_DE = {f"{key}_{i+1}": compute_features(data, Umlaufzeit) for key, da
 # Berechnung der Merkmale des fehlerhaften Lagers FE
 features_FL_FE = {f"{key}_{i+1}": compute_features(data, Umlaufzeit) for key, dataset in extracted_FL_data.items() for i, data in enumerate(dataset['FE_time']) if data is not None}
 
-# Beispielplot der Merkmale
-plt.figure(figsize=(10, 6))
-# Plotting normal Lager DE Merkmale
-plt.plot(features_NL_DE["NL_2"][1][:400], "*", label='Normale Lager DE Std') 
 
-# Plotting fehlerhafte Lager DE Merkmale 
-plt.plot(features_FL_DE["IR_1"][1], "^", label='Fehlerhafte Lager IR DE Std') 
-plt.plot(features_FL_DE["B_1"][1], "^", label='Fehlerhafte Lager B DE Std') 
-plt.plot(features_FL_DE["OR3_1"][1], "^", label='Fehlerhafte Lager OR3 DE Std') 
-plt.plot(features_FL_DE["OR6_1"][1], "^", label='Fehlerhafte Lager OR6 DE Std') 
-plt.plot(features_FL_DE["OR12_1"][1], "^", label='Fehlerhafte Lager OR12 DE Std') 
+for i in range(len(features_NL_DE["NL_2"])):
 
-plt.xlabel('Datenpunkt')
-plt.ylabel('Merkmale')
-plt.legend()
-plt.grid(True)
-plt.show()
+    # Beispielplot der Merkmale
+    plt.figure(figsize=(10, 6))
+    # Plotting normal Lager DE Merkmale
+    plt.plot(features_NL_DE["NL_2"][i-1][:400], "*", label=f'Normale Lager DE {i}tes Merkmals') 
+    
+    # Plotting fehlerhafte Lager DE Merkmale 
+    plt.plot(features_FL_DE["IR_1"][i-1], "^", label=f'Fehlerhafte Lager IR DE {i}tes Merkmals') 
+    plt.plot(features_FL_DE["B_1"][i-1], "^", label=f'Fehlerhafte Lager B DE {i}tes Merkmals') 
+    plt.plot(features_FL_DE["OR3_1"][i-1], "^", label=f'Fehlerhafte Lager OR3 DE {i}tes Merkmals') 
+    plt.plot(features_FL_DE["OR6_1"][i-1], "^", label=f'Fehlerhafte Lager OR6 DE {i}tes Merkmals') 
+    plt.plot(features_FL_DE["OR12_1"][i-1], "^", label=f'Fehlerhafte Lager OR12 DE {i}tes Merkmals') 
+    
+    plt.xlabel('Datenpunkt')
+    plt.ylabel('Merkmale')
+    plt.legend()
+    plt.grid(True)
+    plt.show()
 
-plt.figure(figsize=(10, 6))
-# Plotting normal Lager DE Merkmale
-plt.plot(features_NL_DE["NL_2"][0][:400], "*", label='Normale Lager DE W') 
+# plt.figure(figsize=(10, 6))
+# # Plotting normal Lager DE Merkmale
+# plt.plot(features_NL_DE["NL_2"][0][:400], "*", label='Normale Lager DE W') 
 
-# Plotting fehlerhafte Lager DE Merkmale 
-plt.plot(features_FL_DE["IR_1"][0], "^", label='Fehlerhafte Lager IR DE W') 
-plt.plot(features_FL_DE["B_1"][0], "^", label='Fehlerhafte Lager B DE W') 
-plt.plot(features_FL_DE["OR3_1"][0], "^", label='Fehlerhafte Lager OR3 DE W') 
-plt.plot(features_FL_DE["OR6_1"][0], "^", label='Fehlerhafte Lager OR6 DE W') 
-plt.plot(features_FL_DE["OR12_1"][0], "^", label='Fehlerhafte Lager OR12 DE W') 
+# # Plotting fehlerhafte Lager DE Merkmale 
+# plt.plot(features_FL_DE["IR_1"][0], "^", label='Fehlerhafte Lager IR DE W') 
+# plt.plot(features_FL_DE["B_1"][0], "^", label='Fehlerhafte Lager B DE W') 
+# plt.plot(features_FL_DE["OR3_1"][0], "^", label='Fehlerhafte Lager OR3 DE W') 
+# plt.plot(features_FL_DE["OR6_1"][0], "^", label='Fehlerhafte Lager OR6 DE W') 
+# plt.plot(features_FL_DE["OR12_1"][0], "^", label='Fehlerhafte Lager OR12 DE W') 
 
-plt.xlabel('Datenpunkt')
-plt.ylabel('Merkmale')
-plt.legend()
-plt.grid(True)
-plt.show()
+# plt.xlabel('Datenpunkt')
+# plt.ylabel('Merkmale')
+# plt.legend()
+# plt.grid(True)
+# plt.show()
 
-plt.figure(figsize=(10, 6))
-# Plotting normal Lager DE Merkmale
-plt.plot(features_NL_DE["NL_2"][2][:400], "*", label='Normale Lager DE max') 
+# plt.figure(figsize=(10, 6))
+# # Plotting normal Lager DE Merkmale
+# plt.plot(features_NL_DE["NL_2"][2][:400], "*", label='Normale Lager DE max') 
 
-# Plotting fehlerhafte Lager DE Merkmale 
-plt.plot(features_FL_DE["IR_1"][2], "^", label='Fehlerhafte Lager IR DE max') 
-plt.plot(features_FL_DE["B_1"][2], "^", label='Fehlerhafte Lager B DE max') 
-plt.plot(features_FL_DE["OR3_1"][2], "^", label='Fehlerhafte Lager OR3 DE max') 
-plt.plot(features_FL_DE["OR6_1"][2], "^", label='Fehlerhafte Lager OR6 DE max') 
-plt.plot(features_FL_DE["OR12_1"][2], "^", label='Fehlerhafte Lager OR12 DE max') 
+# # Plotting fehlerhafte Lager DE Merkmale 
+# plt.plot(features_FL_DE["IR_1"][2], "^", label='Fehlerhafte Lager IR DE max') 
+# plt.plot(features_FL_DE["B_1"][2], "^", label='Fehlerhafte Lager B DE max') 
+# plt.plot(features_FL_DE["OR3_1"][2], "^", label='Fehlerhafte Lager OR3 DE max') 
+# plt.plot(features_FL_DE["OR6_1"][2], "^", label='Fehlerhafte Lager OR6 DE max') 
+# plt.plot(features_FL_DE["OR12_1"][2], "^", label='Fehlerhafte Lager OR12 DE max') 
 
-plt.xlabel('Datenpunkt')
-plt.ylabel('Merkmale')
-plt.legend()
-plt.grid(True)
-plt.show()
+# plt.xlabel('Datenpunkt')
+# plt.ylabel('Merkmale')
+# plt.legend()
+# plt.grid(True)
+# plt.show()
 
-plt.figure(figsize=(10, 6))
-# Plotting normal Lager DE Merkmale
-plt.plot(features_NL_DE["NL_2"][3][:400], "*", label='Normale Lager DE var') 
+# plt.figure(figsize=(10, 6))
+# # Plotting normal Lager DE Merkmale
+# plt.plot(features_NL_DE["NL_2"][3][:400], "*", label='Normale Lager DE var') 
 
-# Plotting fehlerhafte Lager DE Merkmale 
-plt.plot(features_FL_DE["IR_1"][3], "^", label='Fehlerhafte Lager IR DE var') 
-plt.plot(features_FL_DE["B_1"][3], "^", label='Fehlerhafte Lager B DE var') 
-plt.plot(features_FL_DE["OR3_1"][3], "^", label='Fehlerhafte Lager OR3 DE var') 
-plt.plot(features_FL_DE["OR6_1"][3], "^", label='Fehlerhafte Lager OR6 DE var') 
-plt.plot(features_FL_DE["OR12_1"][3], "^", label='Fehlerhafte Lager OR12 DE var') 
+# # Plotting fehlerhafte Lager DE Merkmale 
+# plt.plot(features_FL_DE["IR_1"][3], "^", label='Fehlerhafte Lager IR DE var') 
+# plt.plot(features_FL_DE["B_1"][3], "^", label='Fehlerhafte Lager B DE var') 
+# plt.plot(features_FL_DE["OR3_1"][3], "^", label='Fehlerhafte Lager OR3 DE var') 
+# plt.plot(features_FL_DE["OR6_1"][3], "^", label='Fehlerhafte Lager OR6 DE var') 
+# plt.plot(features_FL_DE["OR12_1"][3], "^", label='Fehlerhafte Lager OR12 DE var') 
 
-plt.xlabel('Datenpunkt')
-plt.ylabel('Merkmale')
-plt.legend()
-plt.grid(True)
-plt.show()
+# plt.xlabel('Datenpunkt')
+# plt.ylabel('Merkmale')
+# plt.legend()
+# plt.grid(True)
+# plt.show()
 
 # Labels für fehlerhafte Lager
 labels_FL = {
@@ -155,7 +158,7 @@ train_size_FE = int(train_size * len(dataset_FE))
 val_size_FE = int(val_size * len(dataset_FE))
 test_size_FE = len(dataset_FE) - train_size_FE - val_size_FE
 train_dataset_FE, val_dataset_FE, test_dataset_FE = random_split(dataset_FE, [train_size_FE, val_size_FE, test_size_FE])
-#%%
+
 # DataLoader erstellen
 batch_size_test = test_size_DE
 train_loader_DE = DataLoader(train_dataset_DE, batch_size, shuffle=True)
