@@ -28,6 +28,7 @@ pip install torch
 pip install pytorch-lightning 
 pip install matplotlib 
 pip install scikit-learn
+```
 
 ## Projektstruktur
 
@@ -53,7 +54,7 @@ Eine ausführliche Dokumentation ist im docs-Ordner vorhanden. Die index.html-Da
 
 ## Beispiele
 
-Beispiele zur Nutzung der Funktionen finden Sie in den Python-Dateien und in der Dokumentation.
+Beispiele zur Nutzung der Funktionen sind in den Python-Dateien und in der Dokumentation bereits gestellt.
 
 ## Ergebnisse
 
