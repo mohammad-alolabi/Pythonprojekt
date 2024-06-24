@@ -28,6 +28,7 @@ pip install torch
 pip install pytorch-lightning 
 pip install matplotlib 
 pip install scikit-learn
+```
 
 ## Projektstruktur
 
