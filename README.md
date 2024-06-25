@@ -50,7 +50,7 @@ pip install scikit-learn
 
 ## Dokumentation
 
-Eine ausführliche Dokumentation ist im docs-Ordner vorhanden. Die index.html-Datei soll im Browser geöffnet werden, um die Dokumentation zu lesen.
+Eine ausführliche Dokumentation ist im docs-Ordner bzw. docs/build/html/index.html vorhanden. Die index.html-Datei soll im Browser geöffnet werden, um die Dokumentation zu lesen.
 
 ## Beispiele
 
